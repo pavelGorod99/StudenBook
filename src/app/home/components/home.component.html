@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>StudenBook Home Page</title>
+	<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+</head>
+<body>
+	<div id="grid-container">
+
+		<div class="modal fade" id="callIncomingModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+			<div class="modal-dialog">
+				<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title" id="staticBackdropLabel">StudenBook call</h5>
+				</div>
+				<div class="modal-body">
+					<div class="w-100" id="videoCallContainer" style="display: none!important">
+						<div id="conference">
+							<div id="local-container-incoming" class="w-100"></div>
+							<div id="remote-container-incoming"></div>
+						</div>
+					</div>
+					<div class="w-100" id="incomingCallContainer">
+						<div class="d-flex justify-content-center">
+							{{$friendSurname}} {{$friendName}}
+						</div>
+	
+						<div class="d-flex justify-content-center">
+							<img [src]="$friendAvatar" style="width: 150px; height: 150px; border-radius: 50px;"/>
+						</div>
+	
+						<div class="d-flex justify-content-center">
+							{{$callStatulLabel}}
+						</div>
+					</div>
+				</div>
+				<div class="modal-footer d-flex justify-content-between">
+					<button type="button" class="btn btn-success" (click)="answerCall()">
+						<i class="bi bi-telephone-inbound-fill"></i>
+					</button>
+					<button type="button" class="btn btn-danger" data-bs-dismiss="modal" (click)="hangUpTheCall()">
+						<i class="bi bi-telephone-x-fill"></i>
+					</button>
+				</div>
+				</div>
+			</div>
+		</div>
+
+		<app-header></app-header>
+
+		<app-nav-menu></app-nav-menu>
+
+		<app-section-container></app-section-container>
+
+		<app-aside></app-aside>
+
+		<!-- <app-footer></app-footer> -->
+
+	</div>
+</body>
+</html>

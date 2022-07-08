@@ -1,0 +1,134 @@
+/* #grid-container {
+    display: block;
+    position:relative;
+} */
+
+/* header {
+	background-color: rgba(102,157,179,255);
+	justify-content: center;
+	align-items: center;
+	flex-direction: column;
+} */
+
+#phoneDiv:nth-child(1) {
+	width: 100%!important;
+}
+
+.iti {
+    width: 100%!important;
+}
+
+body {
+	margin: 0;
+	height:100vh;
+}
+
+html, body {
+	height: 100%;
+}
+
+.display {
+	display: flex;
+}
+
+/* img {
+	max-width: 35vw;
+	height: auto;
+} */
+
+/* #logo_h1 {
+	margin-top: 0;
+	margin-bottom: 0;
+	color: white;
+} */
+
+#registration_content {
+	/* display: flex; */
+	justify-content: center;
+    align-items: center;
+    width: 100%;
+}
+
+#registration_form {
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+    width: 50%;
+    /* background-color: blue; */
+
+}
+
+#reg_h1 {
+	width: 90%;
+	justify-content: center;
+	/* margin-left: 5%; */
+}
+
+#form_border_line {
+	width: 95%;
+	border-bottom: 1px solid rgba(156,156,157,255);
+}
+
+#F1 {
+	width: 90%;
+	margin-top: 4%;
+	justify-content: center;
+	flex-direction: column;
+	height: auto;
+}
+
+.errorParent {
+	width: 100%;
+}
+
+.errorNS {
+	width: 50%;
+	justify-content: flex-start;
+	padding: 0 1.5% 0 1.5%;
+}
+
+.errorColor{
+	color: red;
+}
+
+#L1 {
+	width: 100%;
+	justify-content: space-between;
+}
+
+#L2-L4 {
+	width: 100%;
+	justify-content: center;
+	flex-direction: column;
+}
+
+.input_reg {
+	border: 2px solid rgba(156,156,157,255);
+	border-radius: 5px;
+	font-size: 15px;
+	padding: 1.5%;
+	outline: none;
+	margin-bottom: 2%;
+	background-color: rgba(240,246,247,255);
+}
+
+.in_threeErr {
+	width: 100%;
+	justify-content: space-between;
+}
+
+.bdErr {
+	width: 30%;
+}
+
+.in_three {
+	justify-content: space-between;
+}
+
+.select_d {
+	width: 30%;
+}
+
+.select_r {
+	width: 26%;
+}

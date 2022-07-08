@@ -1,0 +1,36 @@
+#stories_container {
+
+	/* margin-top: 25px;
+	width: 90%;
+	background-color: white;
+	border-radius: 5px;
+	padding: 7px; */
+	justify-content: space-between;
+	flex-direction: column;
+}
+
+#stories_label {
+	margin: 7px 10px 7px 10px;
+}
+
+#add_story {
+
+	width: 85px;
+	height: 145px;
+	background-color: #dadada;
+	border-radius: 5px;
+	padding: 7px;
+	margin: 10px;
+	justify-content: center;
+}
+
+#plus_button {
+
+	flex-direction: column;
+	justify-content: flex-end;
+	align-items: center;
+}
+
+#pbp {
+	margin-top: 10px;
+}

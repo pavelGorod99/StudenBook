@@ -1,0 +1,55 @@
+#tape_container {
+
+	margin-top: 25px;
+	width: 90%;
+	background-color: white;
+	border-radius: 5px;
+	padding: 7px;
+	justify-content: center;
+	flex-direction: column;
+}
+
+#ntl_button {
+    width: 100%;
+    justify-content: center;
+    margin:0;
+    padding: 7px;
+    margin: -7px 0px 0px -7px;
+    height: 37px;
+    cursor: pointer;
+    border-radius: 5px 5px 0px 0px;
+}
+
+div#ntl_button:hover {
+	background-color: #dadada;
+}
+
+#new_tapes_label {
+    flex-direction: column;
+    width: 100%;
+    align-items: center;
+    margin-top: 4px;
+}
+
+#ntl_text {
+
+	font-size: 16px;
+	font-family: Arial;
+	width: 150px;
+	background-color: #56a3c3;
+	justify-content: center;
+	border-radius: 3px;
+	padding: 5px;
+	color: white;
+}
+
+#ntl_line_border {
+
+	border-bottom: 1px solid #dadada;
+	width: 95%;
+	margin: 10px 0px;
+}
+
+.sec_elem_content {
+	padding: 15px;
+}

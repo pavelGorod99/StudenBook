@@ -1,0 +1,71 @@
+  trick1(event: any){
+
+    let div_a = document.getElementById('c_div')
+
+    let div_m = document.getElementById('m_div')
+
+    let textarea_m = document.getElementById('c_textarea')
+    if (textarea_m) this.$_TEXTAREA_HEIGHT = parseInt(textarea_m.style.height.replace("px", ""))
+
+    let text = event.target.value
+
+    let r = text.split('\n')
+
+    let newLineCount = text.split('\n').length
+
+    let nlc = 0;
+
+    let t = this.getSelectedText()
+
+    let p = String(t)
+    
+    let y = p.split('\n').length
+
+    if (event.keyCode == 13 && event.shiftKey) {
+
+      if (y > 1) {
+        nlc = (this.$_TEXTAREA_HEIGHT / this.$_INIT_TEXTAREA_HEIGHT) - y + 1
+        newLineCount = newLineCount - y + 1
+      }
+
+      if (div_a && textarea_m && div_m && newLineCount < 5){
+
+        if (y == 1)
+          nlc = (this.$_TEXTAREA_HEIGHT / this.$_INIT_TEXTAREA_HEIGHT)
+
+        div_a.style.height = ((nlc * this.$_INIT_TEXTAREA_HEIGHT) + this.$_INIT_CHAT_DIV_HEIGHT) + "px"
+        div_m.style.height = (this.$_INIT_MESS_DIV_HEIGHT - (nlc * this.$_INIT_TEXTAREA_HEIGHT)) + "px"
+
+      }
+    }  else if (event.keyCode == 8) {
+
+      if (y > 1) {
+        nlc = (this.$_TEXTAREA_HEIGHT / this.$_INIT_TEXTAREA_HEIGHT) - y
+        newLineCount = newLineCount - y + 1
+      }
+
+      if (div_a && textarea_m && div_m && newLineCount <= 5) {
+
+        if (y == 1) {
+          if (r[r.length-1] == '' && this.$_TEXTAREA_HEIGHT / this.$_INIT_TEXTAREA_HEIGHT > 1) {
+            nlc = (this.$_TEXTAREA_HEIGHT / this.$_INIT_TEXTAREA_HEIGHT) - 2
+          } else {
+            nlc = (this.$_TEXTAREA_HEIGHT / this.$_INIT_TEXTAREA_HEIGHT) - 1
+          }
+        }
+
+        div_a.style.height = ((nlc * this.$_INIT_TEXTAREA_HEIGHT) + this.$_INIT_CHAT_DIV_HEIGHT) + "px"
+        div_m.style.height = (this.$_INIT_MESS_DIV_HEIGHT - (nlc * this.$_INIT_TEXTAREA_HEIGHT)) + "px"
+      }
+
+    } else if (event.keyCode == 13) {
+
+      if (div_a && div_m) {
+        div_a.style.height = this.$_INIT_CHAT_DIV_HEIGHT + "px"
+        div_m.style.height = this.$_INIT_MESS_DIV_HEIGHT + "px"
+      }
+        
+      this.$_TEXTAREA_TEXT = ''
+      event.preventDefault();
+    }
+  }

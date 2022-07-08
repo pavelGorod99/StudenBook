@@ -1,0 +1,327 @@
+/*
+ * Styles: Body, HTML, and container
+ * 1: Make the application fullscreen
+ * 2: Basic reset styles
+ */
+ /* body,
+ html, */
+ .seq {
+ 
+   /* #1 */
+   width: 100%;
+   height: 100%;
+ 
+   /* #2 */
+   margin: 0;
+   padding: 0;
+ }
+ 
+ /*
+  * Styles: Container
+  * 1: Canvas, steps, and content should be positioned relative to the container
+  * 2: Hide anything that goes beyond the boundaries of the Sequence container
+  * 3: Some basic styles
+  * 4: Set the initial background color
+  * 5: Make the background color transition when navigating between steps
+  */
+ .seq {
+ 
+   /* #1 */
+   position: relative;
+ 
+   /* #2 */
+   overflow: hidden;
+ 
+   /* #3 */
+   font-family: sans-serif;
+   color: white;
+   text-align: center;
+ 
+   /* #4 */
+   background-color: #2A93BC;
+ 
+   /* #5 */
+   transition-duration: .5s;
+   transition-property: background-color;
+ }
+ 
+ /*
+  * Styles: Canvas and steps
+  * 1: Make the width/height of the screen, canvas, and steps the same size as the Sequence element
+  * 2: Reset the canvas and steps for better browser consistency
+  */
+ .seq-canvas,
+ .seq-canvas > * {
+ 
+   /* #1 */
+   height: 100%;
+   width: 100%;
+ 
+   /* #2 */
+   margin: 0;
+   padding: 0;
+   list-style: none;
+ }
+ 
+ /*
+  * Styles: steps
+  * 1: Position steps all in the same place
+  * 2: Add whitespace around each step
+  * 3: Make space for the pagination
+  */
+ .seq-canvas > * {
+   /* #1 */
+   position: absolute;
+ 
+   /* #2 */
+   padding: 32px;
+   box-sizing: border-box;
+ 
+   /* #3 */
+   height: auto;
+   top: 0;
+   bottom: 80px;
+ }
+ 
+ .seq-step1 {
+   background-color: #2A93BC;
+ }
+ 
+ .seq-step2 {
+   background-color: #6BC85E;
+ }
+ 
+ .seq-step3 {
+   background-color: #45367E;
+ }
+ 
+ .feature {
+   width: 70%;
+   max-width: 100%;
+   height: auto;
+ }
+ 
+ @media only screen and (min-width: 460px) and (min-height: 520px) {
+   .feature {
+     width: 100%;
+   }
+ }
+ 
+ 
+ /* Ghost element */
+ .valign:before {
+   content: "";
+   height: 100%;
+ }
+ 
+ /* Vertically align the ghost and desired elements */
+ .valign:before,
+ .valign > .vcenter {
+   display: inline-block;
+   vertical-align: middle;
+ }
+ 
+ /* Remove 4px gap to allow consistent valign */
+ .valign {
+   font-size: 0;
+ }
+ 
+ /* Reset font-size on valigned elements */
+ .valign > .vcenter {
+   font-size: 16px;
+ }
+ 
+ /*
+  * 1: Reset
+  * 2: Titles should start as transparent
+  * 3: When a change in opacity occurs, transition over .5s
+  */
+ .title {
+   /* #1 */
+   margin: 0;
+ 
+   /* #2 */
+   opacity: 0;
+   transform: translateX(50px) translateZ(0);
+ 
+   /* #3 */
+   transition-duration: .5s;
+   transition-property: opacity, transform;
+ }
+ 
+ /*
+  * When a step is active, fade in to opaque and slide to the center
+  */
+ .seq-in .title {
+   opacity: 1;
+   transform: translateX(0) translateZ(0);
+ }
+ 
+ /*
+  * When a step becomes inactive, fade out and slide to the left
+  */
+ .seq-out .title {
+   opacity: 0;
+   transform: translateX(-50px) translateZ(0);
+ }
+ 
+ /*
+  * Scale an image to 0 (so it can't be seen) when in its start position
+  */
+ .feature {
+   transform: translateZ(0) scale(0);
+   transition-duration: .5s;
+   transition-property: transform, opacity;
+ }
+ 
+ /*
+  * When a step is active, make the image scale in
+  */
+ .seq-in .feature {
+   transform: translateZ(0) scale(1);
+ }
+ 
+ /*
+  * When a step becomes inactive, make the image fade out but maintain full scale
+  */
+ .seq-out .feature {
+   transform: translateZ(0) scale(1);
+   opacity: 0;
+ }
+ 
+ /*
+  * Styles: element holding navigation UI
+  * 1: Position the nav 40px from the bottom and make it full-width
+  * 2: Reset styles for the <fieldset> element
+  */
+ .nav {
+   /* #1 */
+   position: absolute;
+   z-index: 100;
+   left: 0;
+   right: 0;
+   bottom: 2.5em;
+   max-width: 640px;
+   width: 100%;
+ 
+   /* #2 */
+   border: none;
+   margin: 0 auto;
+   padding: 0;
+ }
+ 
+ /*
+  * Styles: previous/next buttons
+  * 1: Reset styles
+  * 2: General styles
+  * 3: Set up the `opacity` so that it will transition from 70% transparency to opaque when hovered over
+  */
+ .seq-next,
+ .seq-prev {
+   /* #1 */
+   padding: 0;
+   background: transparent;
+   border: none;
+ 
+   /* #2 */
+   padding: .75em;
+   cursor: pointer;
+   color: white;
+   font-size: .75em;
+   text-transform: uppercase;
+ 
+   /* #3 */
+   opacity: .7;
+   transition-duration: .25s;
+   transition-property: opacity;
+ }
+ 
+ .seq-next:hover,
+ .seq-prev:hover {
+   opacity: 1;
+ }
+ 
+ /*
+  * Styles: next/previous buttons and pagination container
+  */
+ .seq-next,
+ .seq-prev,
+ .seq-pagination {
+   position: relative;
+   display: inline-block;
+   vertical-align: middle;
+   margin-top: 0;
+ }
+ 
+ /*
+  * Add some space to sides of pagination
+  */
+ .seq-pagination {
+   margin: 0 1em;
+   padding: 0;
+ }
+ 
+ /*
+  * Styles: pagination links
+  * 1: Make the links relative so their active indicator dot can be position: absolute
+  * 2: Reset styles
+  * 3: Make the links sit side-by-side
+  * 4: General styles
+  */
+ .seq-pagination li {
+   /* #1 */
+   position: relative;
+ 
+   /* #2 */
+   list-style: none;
+ 
+   /* #3 */
+   display: inline-block;
+   vertical-align: middle;
+ 
+   /* #4 */
+   width: 50px;
+   height: 40px;
+   margin: 0 .25em;
+ }
+ 
+ /*
+  * Styles: A small dot that appears when a pagination link is active
+  * 1: position the dot under the image and centered
+  * 2: Make the dot transparent when not active and set up a transition for when it becomes active
+  */
+ .seq-pagination li:before {
+   /* #1 */
+   content: "";
+   display: block;
+   position: absolute;
+   top: 100%;
+   left: 50%;
+   width: 6px;
+   height: 6px;
+   margin-left: -3px;
+   margin-top: .5em;
+   border-radius: 50%;
+   background: white;
+ 
+   /* #2 */
+   opacity: 0;
+   transition-duration: .25s;
+   transition-property: opacity;
+ }
+ 
+ /*
+  * Show the indicator dot for the current link
+  */
+ .seq-pagination .seq-current:before {
+   opacity: .7;
+ }
+ 
+ /*
+  * Reset styles
+  */
+ .seq-pagination img,
+ .seq-pagination a {
+   display: block;
+   border: none;
+ }

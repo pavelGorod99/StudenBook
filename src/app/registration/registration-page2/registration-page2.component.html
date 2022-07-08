@@ -1,0 +1,39 @@
+<app-registration-head></app-registration-head>
+<!-- <form id="formUploadProfilePhoto" method="post" enctype="multipart/form-data">
+
+    <input style="display: none;"  type="file" accept="image/*" (change)="onFileUpload($event)" #selectFile>
+    <button (click)="selectFile.click()">Select file</button>
+</form> -->
+
+<div class="w-100 row justify-content-center m-0 mt-5">
+    <div class="col-12">
+        <form id="formUploadProfilePhoto" class="d-flex justify-content-center" method="post" enctype="multipart/form-data">
+            <div class="col-sm-6">
+                <div class="mb-3">
+                    <input class="form-control" type="file" id="formFile" accept="image/*" (change)="activateSavePhotoButton()">
+                    <button type="button" class="w-100 btn btn-primary mt-3" (click)="onFileUpload($event)" [disabled]="$disableSaveButton">Click to save your photo</button>
+                </div>
+            </div>
+        </form>
+    </div>
+
+    <div class="col-12">
+        <div class="d-flex justify-content-center">
+            <div class="col-sm-6">
+                <button type="button" class="btn btn-success w-100" (click)="step2Complete()">Continue</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class='position-fixed top-0 end-0 bg-success' style='z-index: 11'>
+    <div id='liveToast1' class='toast hide' role='alert' aria-live='assertive' aria-atomic='true'>
+        <div class="toast-header d-flex justify-content-end">
+            <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+        </div>
+        <div class='toast-body' id="toastText">
+            Your photo was uploaded
+        </div>
+    </div>
+</div>
+

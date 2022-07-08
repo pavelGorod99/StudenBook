@@ -1,0 +1,9 @@
+#search-result-container {
+
+    background-color:brown;
+    position: relative;
+    z-index: 800;
+    left: 220px;
+    margin-right: auto;
+    width: 270px;
+}

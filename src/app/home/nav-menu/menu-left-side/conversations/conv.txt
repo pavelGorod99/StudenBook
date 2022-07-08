@@ -1,0 +1,152 @@
+joinConference(name: string) {
+
+    var cloudUrl = 'https://cloud.apizee.com';
+    var connectedSession = null;
+    var connectedConversation: any
+    var localStream: any;
+    //==============================
+    // 1/ CREATE USER AGENT
+    //==============================
+    var ua = new UserAgent({
+        uri: 'apzkey:myDemoApiKey'
+    });
+
+    this.registerInformation.cloudUrl = cloudUrl;
+
+    //==============================
+    // 2/ REGISTER
+    //==============================
+    ua.register(this.registerInformation).then(function(session) {
+      // Save session
+      connectedSession = session;
+
+      connectedSession
+          .on("contactListUpdate", function(updatedContacts: any) { 
+            //display a list of connected users
+              console.log("MAIN - contactListUpdate", updatedContacts);
+              
+              if (connectedConversation !== null) {
+                  let contactList = connectedConversation.getContacts();
+                  console.info("contactList  connectedConversation.getContacts() :", contactList);
+              }
+          });
+
+      
+      //==============================
+      // 3/ CREATE CONVERSATION
+      //==============================
+
+      ua.enableMeshRoomMode(true); //Activate Mesh room mode
+
+      connectedConversation = connectedSession.getConversation(name);
+
+      //==========================================================
+      // 4/ ADD EVENT LISTENER : WHEN NEW STREAM IS AVAILABLE IN CONVERSATION
+      //==========================================================
+      connectedConversation.on('streamListChanged', function(streamInfo:any) {
+
+        console.log("streamListChanged :", streamInfo);
+
+        var subscribeOptions = {
+          //audioOnly : true,
+          //videoOnly : true
+        };
+
+        if (streamInfo.listEventType === 'added') {
+          if (streamInfo.isRemote === true) {
+
+              connectedConversation.subscribeToMedia(streamInfo.streamId, subscribeOptions)
+                  .then(function(stream:any) {
+                      console.log('subscribeToMedia success');
+                  }).catch(function(err:any) {
+                      console.error('subscribeToMedia error', err);
+                  });
+          }
+        }
+      });
+
+      //=====================================================
+      // 4 BIS/ ADD EVENT LISTENER : WHEN STREAM IS ADDED/REMOVED TO/FROM THE CONVERSATION
+      //=====================================================
+      connectedConversation.on('streamAdded', function(stream: any) {
+        stream.addInDiv('remote-container', 'remote-media-' + stream.streamId, {}, false);
+        
+      }).on('streamRemoved', function(stream:any) {
+        stream.removeFromDiv('remote-container', 'remote-media-' + stream.streamId);
+        /*
+                        document.getElementById('remote-media-' + stream.streamId).remove();
+        */
+        });
+
+        connectedConversation.on('error', function(errorInfo: any) {
+          console.error("connectedConversation error streamInfo :", errorInfo.streamInfo);
+          console.error("connectedConversation error errorCode :", errorInfo.errorCode);
+          console.error("connectedConversation error errorInfo :", errorInfo.errorInfo);
+        });
+
+        //==============================
+        // 5/ CREATE LOCAL STREAM
+        //==============================
+        var createStreamOptions:any;
+        createStreamOptions.constraints = {
+            audio: {
+              echoCancellation: true,
+              noiseSuppression: true,
+              sampleRate: 44100
+            },
+            video: true
+        };
+
+        ua.createStream(createStreamOptions)
+                .then(function(stream) {
+
+                  console.log('createStream :', stream);
+
+                  // Save local stream
+                  localStream = stream;
+                  stream.removeFromDiv('local-container', 'local-media');
+                  stream.addInDiv('local-container', 'local-media', {}, true);
+                
+                  //==============================
+                  // 6/ JOIN CONVERSATION
+                  //==============================
+                
+                  connectedConversation.join()
+                        .then(function(response: any) {
+
+                          connectedConversation.publish(localStream);
+                        }).catch(function(err: any) {
+                          console.error('Conversation join error', err);
+                        });
+                }).catch(function(err: any) {
+                  console.error('create stream error', err);
+                });
+        
+    });
+
+  }
+
+  createConference(conferenceName: string) {
+
+    var elemCreate = document.getElementById('create')
+    if (elemCreate) {
+      elemCreate.style.display = 'none';
+    }
+
+    var elemConference = document.getElementById('conference')
+    if (elemConference) {
+      elemConference.style.display = 'inline-block';
+    }
+
+    var elemTitle = document.getElementById('title');
+    if (elemTitle) {
+      elemTitle.innerHTML = 'You are in conference: ' + conferenceName;
+    }
+
+    var elemCallActions = document.getElementById('callActions')
+    if (elemCallActions) {
+      elemCallActions.style.display = 'block';
+    }
+
+    this.joinConference(conferenceName);
+  }

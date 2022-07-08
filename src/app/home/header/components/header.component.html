@@ -1,0 +1,192 @@
+<!-- <header class="display">
+    <div id="header-container">
+        <div id="h_left" class="display">
+            <div id="h_left_container" class="display">
+                <a id="home_button" href="/home" class="display" (click)="goToMain()">
+                    <div id="logo_background">
+                        <img id="logo_img" src="assets/img/logo_icon.png">
+                    </div>
+                    <h2 id="logo_h2" class="display">StudenBook</h2>
+                </a>
+            </div>
+        </div>
+        <div id="h_center" class="display">
+            <div id="h_center_container" class="display">
+
+                
+                <div id="hc_p1" class="display">
+                    <div id="h_search_bar" class="display mt-2 mb-2">
+                        <input id="search_bar" type="search" name="search_bar" [(ngModel)]="this.searchText.$_SEARCH_TEXT" (keyup)="onKeydownSearch($event)" (keydown.enter)=onKeydown($event) (search)="clearSearch($event)" placeholder="&#xF002; Search" style="font-family:Arial, FontAwesome">
+                        <div class="search-result" *ngFor="let result of results$ | async"></div>
+                    </div>
+                    
+                    <div class = "block_notification">
+                        <div id="h_notification_icon" class="display">
+                            <a id="notification_button" class="display" (click)="showNotificationContainer()">
+                                <img id="notification_icon" src="assets/img/notification_icon.png">
+                            </a>
+                            <div *ngIf="$_NOTIF_COUNT > 0" class="notif_count display" id="notif_countDiv">
+                                {{$_NOTIF_COUNT}}
+                            </div>
+                        </div>
+                        <div id="notification_container" class = 'zona_notificari'>
+                            <div *ngIf="$_NOTIF_COUNT == -1" class="p-2">
+                                You do not have notifications
+                            </div>
+                            <div style="display: flex; flex-direction: column; padding: 7px;" *ngFor="let notif of $_NOTIF_LIST">
+                                <div id="{{'friendship_req_btn' + notif.spec_num_notif}}">
+                                    <div style="width: 100; text-align: center; border-bottom: 1px solid gray; padding-bottom: 5px;">
+                                        Friendship request
+                                    </div>
+                                    <div style="display: flex; flex-direction: row; justify-content: space-between; align-items: center; margin-top: 10px; margin-bottom: 10px;">
+                                        <div style="display: flex;" class="h-100 d-flex justify-content-center align-content-center">
+                                            <div class="d-flex flex-column justify-content-center align-content-center">
+                                                <img src="{{$_API_HOST}}/api/{{notif.Avatar_Path}}" height="35" width="35">
+                                            </div>
+                                            <div style="margin-left: 10px;">
+                                                <div>{{notif.Surname}} {{notif.Name}}</div>
+                                                <div>{{notif.Name_City}}, {{notif.Name_Country}}</div>
+                                            </div>
+                                        </div>
+                                        <div style="display: flex; flex-direction: column; align-items: center;">
+                                            <div>
+                                                <button type="button" class="btn btn-success mb-2" (click)="acceptFriendship(notif.ID, true, notif)" style="width: 80px;">Accept</button>
+                                            </div>
+                                            <div>
+                                                <button type="button" class="btn btn-danger" (click)="acceptFriendship(notif.ID, false, notif)" style="width: 80px;">Reject</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+        <div id="h_right" class="display">
+            <div id="h_right_container" class="display">
+                <div id="log_in_out" class="display">
+
+                    <div id="log_in_out_button" class="display">
+                        <div class="log_in_out_ch">{{$_FULL_NAME_USER}}</div>
+                        <div class="log_in_out_ch">
+                            <img src="assets/img/user_icon.png">
+                        </div>
+                        <div class="log_in_out_ch">
+                            <img src="assets/img/down_arrow_login.png">
+                        </div>
+                    </div>
+
+                    <form method="post" style="width: 40%" class="mt-2">
+                        <button type="button" class="btn btn-secondary" (click)="logOut()">Sign out</button>
+                    </form>
+                        
+                </div>
+                <div id="hrc_right_side" class="display">
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+</header> -->
+
+<!-- <nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <div class="container-fluid">
+
+      <a class="navbar-brand" href="/home" (click)="goToMain()">
+        <div id="logo_background">
+            <img id="logo_img" src="assets/img/logo_icon.png">
+        </div>
+        <h2 id="logo_h2" class="display">StudenBook</h2>
+      </a>
+
+
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <div class="collapse navbar-collapse d-flex flex-row-reverse" id="navbarSupportedContent">
+        
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+          <li class="nav-item">
+            <a class="nav-link active" aria-current="page" href="#">Home</a>
+          </li>
+        </ul>
+
+        <form class="d-flex">
+          <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+          <button class="btn btn-outline-success" type="submit">Search</button>
+        </form>
+
+      </div>
+    </div>
+</nav> -->
+
+<nav class="navbar navbar-expand-md navbar-dark bg-dark sidebarNavigation ms-0 me-0" data-sidebarClass="navbar-dark bg-dark">
+    
+    <div class="container-fluid d-flex justify-content-center">
+        <div class="row w-100">
+            <div class="col-4 d-flex flex-row-reverse">
+                <a class="navbar-brand d-flex me-5" href="/home" (click)="goToMain()">
+                    <div id="logo_background">
+                        <img id="logo_img" src="assets/img/logo_icon.png">
+                    </div>
+                    <h2 id="logo_h2" class="d-flex justify-content-center align-content-center m-0 mt-1">StudenBook</h2>
+                </a>
+
+                <button class="navbar-toggler leftNavbarToggler" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault"
+                    aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+            </div>
+            <div class="col-8 d-flex">
+                <div class="collapse navbar-collapse d-flex" id="navbarsExampleDefault">
+    
+                    <form class="form-inline my-2 my-lg-0">
+                        <input class="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search">
+                        <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+                    </form>
+                    <!-- mr-auto -->
+                    <ul class="navbar-nav m-0">
+                        <li class="nav-item active">
+                            <a class="nav-link" href="#">Home
+                                <span class="sr-only">(current)</span>
+                            </a>
+                        </li>
+                    </ul>
+                    
+                </div>
+            </div>
+        </div>
+        
+        <!-- <a class="navbar-brand d-flex" href="/home" (click)="goToMain()">
+            <div id="logo_background">
+                <img id="logo_img" src="assets/img/logo_icon.png">
+            </div>
+            <h2 id="logo_h2" class="d-flex justify-content-center align-content-center m-0 mt-1">StudenBook</h2>
+        </a> -->
+    
+        <!-- <button class="navbar-toggler leftNavbarToggler" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault"
+                    aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button> -->
+    
+        <!-- <div class="collapse navbar-collapse d-flex" id="navbarsExampleDefault">
+    
+            <form class="form-inline my-2 my-lg-0">
+                <input class="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search">
+                <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+            </form>
+            <ul class="navbar-nav m-0">
+                <li class="nav-item active">
+                    <a class="nav-link" href="#">Home
+                        <span class="sr-only">(current)</span>
+                    </a>
+                </li>
+            </ul>
+            
+        </div> -->
+    </div>
+</nav>

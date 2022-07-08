@@ -1,0 +1,48 @@
+<div *ngIf="$_showSearchResultContainer" id="search-result-container">
+    <div style="display: flex; justify-content: space-between;">
+        <div>
+            Search result!
+        </div>
+        <div>
+            <i class="fa fa-close" (click)="closeSearchResultContainer()"></i>
+        </div>
+    </div>
+    <div *ngIf="$_no_data_found">
+        No data found
+    </div>
+    <div *ngIf="!$_no_data_found">
+        <div *ngFor="let user of $_SEARCH_LIST" style="display: flex; flex-direction: row; background-color: bisque; border-top: 1px solid black; padding-top: 5px;">
+            <div>
+                <img [src]="$_API_HOST + '/api/' + user.Avatar_Path" alt="../../../../assets/img/Studentbook_avatar.png" width="30px" height="30px" style="border-radius: 25px">
+            </div>
+            <div>
+                {{user.Name}} {{user.Surname}}<br>Chisinau, Moldova
+            </div>
+        </div>
+    </div>
+    
+    <!-- <div style="display: flex; flex-direction: row; background-color: bisque; border-top: 1px solid black; padding-top: 5px">
+        <div>
+            <img src="../../../../assets/img/Studentbook_avatar.png" width="30px" height="30px">
+        </div>
+        <div>
+            Gorodetchi Pavel<br>Chisinau, Moldova
+        </div>
+    </div>
+    <div style="display: flex; flex-direction: row; background-color: bisque; border-top: 1px solid black; padding-top: 5px">
+        <div>
+            <img src="../../../../assets/img/Studentbook_avatar.png" width="30px" height="30px">
+        </div>
+        <div>
+            Gorodetchi Pavel<br>Chisinau, Moldova
+        </div>
+    </div>
+    <div style="display: flex; flex-direction: row; background-color: bisque; border-top: 1px solid black; padding-top: 5px">
+        <div>
+            <img src="../../../../assets/img/Studentbook_avatar.png" width="30px" height="30px">
+        </div>
+        <div>
+            Gorodetchi Pavel<br>Chisinau, Moldova
+        </div>
+    </div> -->
+</div>

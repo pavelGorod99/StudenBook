@@ -1,0 +1,48 @@
+body {
+
+	margin: 0;
+	height: 100%;
+	background-color: #edeef0;
+	/* overflow-y: scroll; */
+}
+
+#grid-container {
+
+	display: grid;
+	grid-template-rows: auto 3.4fr auto;
+	grid-template-columns: 30% 40% 30%;
+	min-height: 100vh;
+
+	/* background-color: blue; */
+}
+
+::ng-deep app-header {
+    grid-column-start: 1;
+	grid-column-end: 4;
+	grid-row-start: 1;
+	grid-row-end: 2;
+	/* height: 50px; */
+	/* background-color: silver; */
+	/* width: 100%; */
+}
+
+::ng-deep app-nav-menu {
+	grid-column-start: 1;
+	grid-column-end: 2;
+	grid-row-start: 2;
+	grid-row-end: 3;
+}
+
+::ng-deep app-section-container {
+	grid-column-start: 2;
+    grid-column-end: 3;
+    grid-row-start: 2;
+    grid-row-end: 3;
+}
+
+::ng-deep app-side {
+	grid-column-start: 3;
+	grid-column-end: 4;
+	grid-row-start: 2;
+	grid-row-end: 3;
+}

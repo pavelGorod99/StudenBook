@@ -1,0 +1,44 @@
+#friend_list_label {
+
+    font-size: 130%;
+    margin-top: 25px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid gray;
+}
+
+.f_cell {
+
+    background-color: blanchedalmond;
+    padding: 7px;
+    border-radius: 7px;
+    margin-top: 10px;
+}
+
+.vertical-dots {
+    cursor: pointer;
+}
+
+.dots-options {
+    position: absolute;
+    z-index: 3000;
+    background-color: aqua;
+    width: 100px;
+    border-radius: 5px;
+    padding: 5px;
+    display: none;
+}
+
+.action_f_btn {
+    width: 100%;
+}
+
+.f_flag_status {
+
+    height: 10px;
+    width: 10px;
+    /* background-color: greenyellow; */
+    border-radius: 5px;
+    position: absolute;
+    margin-left: 25px;
+    margin-top: 25px;
+}

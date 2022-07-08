@@ -1,0 +1,18 @@
+#aside {
+	justify-content: center;
+}
+
+#aside_container {
+
+    width: 100%;
+   display: grid;
+   grid-template-columns: 60% 40%;
+}
+
+::ng-deep app-menu-right-side{
+    grid-column-start: 1;
+	grid-column-end: 2;
+
+	grid-row-start: 1;
+	grid-row-end: 2;
+}

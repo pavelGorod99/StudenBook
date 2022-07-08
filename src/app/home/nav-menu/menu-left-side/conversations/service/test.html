@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<head>
+    <script>
+
+window.onload = (event) => {
+  console.log('page is fully loaded');
+
+  console.log('Initially ' + (window.navigator.onLine ? 'on' : 'off') + 'line');
+
+window.addEventListener('online', () => console.log('Became online'));
+window.addEventListener('offline', () => console.log('Became offline'));
+
+document.getElementById('statusCheck').addEventListener('click', () => console.log('window.navigator.onLine is ' + window.navigator.onLine));
+};
+
+
+    </script>
+</head>
+<body>
+    <button id="statusCheck">Click to check the <tt>window.navigator.onLine</tt> property</button><br /><br />
+    Check the console below for results:
+</body>
+</html>

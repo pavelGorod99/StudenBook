@@ -1,0 +1,3 @@
+<app-registration-page1 *ngIf="step == 1" (step1CompleteEvent)="handleStep1CompleteEvent($event)"></app-registration-page1>
+<app-registration-page2 *ngIf="step == 2" (step2CompleteEvent)="handleStep2CompleteEvent($event)"></app-registration-page2>
+<app-registration-page3 *ngIf="step == 3" (step3CompleteEvent)="handleStep3CompleteEvent($event)"></app-registration-page3>

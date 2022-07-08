@@ -1,0 +1,28 @@
+#nav {
+
+	/* grid-column-start: 1;
+	grid-column-end: 2;
+
+	grid-row-start: 2;
+	grid-row-end: 3; */
+
+	justify-content: flex-end;
+}
+
+#nav_menu {
+
+	width: 200px;
+	flex-direction: column;
+}
+
+#nav_border_line {
+
+	width: 100%;
+	justify-content: center;
+}
+
+#border_line {
+
+	width: 90%;
+	border-bottom: 1px solid #7b7b7b;
+}

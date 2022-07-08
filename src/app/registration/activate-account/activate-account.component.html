@@ -1,0 +1,46 @@
+<!-- <p>Congratulations your account was activated!</p>
+<br>
+<a href="/login">
+  Go to login page!  
+</a> -->
+<div class="bg-light position-absolute w-100 h-100 d-flex justify-content-center align-items-center opacity-50" style="z-index: 99999; opacity: 50%;" id="loadingDataSpinner">
+  <div class="spinner-grow" role="status">
+    <span class="visually-hidden">Loading...</span>
+  </div>
+</div>
+
+<app-activation-head></app-activation-head>
+<div *ngIf="!$activatedAccount" class="w-100 d-flex justify-content-center mt-5">
+    <div class="w-100 row justify-content-center">
+      <form id="phoneNumberForm" class="col-12 col-sm-6 col-md-4 col-lg-4">
+        <div class="mb-3">
+          <label for="exampleFormControlInput1" class="form-label">We sent you a confirmation cod - 6 digits</label>
+          <input type="text" class="form-control" id="exampleFormControlInput1" name="confirmationCode" [(ngModel)]="$smsCode" maxlength="6">
+          <div id="errMessage" class="errMessage mt-2">
+            {{$errMessage}}
+          </div>
+          <button type="button" class="w-100 btn btn-success mt-3" (click)="confirmSmsCode()">Confirm code</button>
+        </div>
+      </form>
+    </div>
+</div>
+
+<div *ngIf="$activatedAccount" class="w-100 d-flex flex-column align-content-center mt-5">
+  <div class="h3 d-flex justify-content-center">
+    Your account has been activated!
+  </div>
+  <div class="h4 d-flex justify-content-center">
+    Now you can <a routerLink="/login" class="ms-1">login</a>
+  </div>
+</div>
+
+<div class='position-fixed top-0 end-0 bg-success' style='z-index: 11'>
+  <div id='liveToast1' class='toast hide' role='alert' aria-live='assertive' aria-atomic='true'>
+      <div class="toast-header d-flex justify-content-end">
+          <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+      </div>
+      <div class='toast-body' id="toastText">
+        Your email has been confirmed!
+      </div>
+  </div>
+</div>

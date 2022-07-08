@@ -1,0 +1,34 @@
+<!-- <p>friends works!</p> -->
+<div id="friend_list_label">
+    Friend list
+</div>
+<div id="friends_list_container">
+    <div id="friend_cell" class="f_cell" style="display: flex; justify-content: space-between;" *ngFor="let friend of $_FRIEND_LIST">
+        <div style="display: flex; align-items: center;">
+            <div style="display: flex; align-items: center;">
+                <img src="{{$_API_HOST + '/api/' + friend.Avatar_Path}}" style="height: 30px; width: 30px; border-radius: 5px;">
+                <div class="f_flag_status" [ngStyle]="{'background-color': friend.Status == 1 ? 'greenyellow':''}"></div>
+            </div>
+            <div style="display: flex; flex-direction: column; margin-left: 10px;">
+                <div>
+                    {{friend.Surname}} {{friend.Name}}
+                </div>
+                <div>
+                    {{friend.Name_City}}, {{friend.Name_Country}}
+                </div>
+            </div>
+        </div>
+        <div style="display: flex; align-items: center;">
+            <!-- <button id="{{'message_f_' + friend.elem_f_identif}}" (click)="openMessage()">Message</button> -->
+            <button id="{{'message_f_' + friend.elem_f_identif}}" (click)="openMessage()" type="button" class="btn btn-primary">Message</button>
+            <div style="margin-left: 10px; margin-right: 7px;">
+                <i class="fa fa-ellipsis-v vertical-dots" aria-hidden="true" id="{{'options_f_' + friend.elem_f_identif}}" (click)="openOptions(friend.elem_f_identif)"></i>
+                <div class="dots-options" id="{{'options-container-' + friend.elem_f_identif}}">
+                    <button type="button" class="action_f_btn btn btn-danger mb-1" id="{{'delete_f_' + friend.elem_f_identif}}">Delete</button>
+                    <!-- <button type="button" class="btn btn-danger">Danger</button> -->
+                    <button type="button" class="action_f_btn btn btn-secondary" id="{{'block_f_' + friend.elem_f_identif}}">Block</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

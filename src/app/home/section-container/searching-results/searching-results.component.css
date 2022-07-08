@@ -1,0 +1,17 @@
+.add_to_friends_btn {
+
+    padding: 7px; 
+    border-radius: 5px;
+    border: none;
+    cursor: pointer;
+}
+
+.add_to_friends_btn:hover {
+
+    background-color: darkorange;
+    /* background-color: cadetblue; */
+}
+
+.buttons {
+    width: 120.25px!important
+}

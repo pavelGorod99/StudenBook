@@ -1,0 +1,38 @@
+<div id="section" class="display">
+    <div id="section_container" class="display">
+        <div *ngIf="displaySectionContainer">
+            <app-what-is-new></app-what-is-new>
+
+            <app-story-container></app-story-container>
+
+            <app-tape-container></app-tape-container>
+        </div>
+
+        <div *ngIf="displayNews" style="width: 100%;">
+            <app-news></app-news>
+        </div>
+
+        <div *ngIf="displayConversations" style="width: 100%;">
+            <app-conversations></app-conversations>
+        </div>
+
+        <div *ngIf="displayFriends" style="width: 100%">
+            <app-friends></app-friends>
+        </div>
+
+        <div *ngIf="displayGroups" style="width: 100%;">
+            <app-groups></app-groups>
+        </div>
+
+        <div *ngIf="displayPhotos" style="width: 100%;">
+            <app-photos></app-photos>
+        </div>
+
+        <div *ngIf="displaySettings" style="width: 100%;">
+            <app-settings></app-settings>
+        </div>
+        <div *ngIf="displaySearchingResults" style="width: 100%;">
+            <app-searching-results></app-searching-results>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,22 @@
+#what_new_container {
+
+	/* margin-top: 25px; */
+	/* width: 90%;
+	background-color: white;
+	border-radius: 5px; */
+	/* padding: 7px; */
+	/* justify-content: space-between;
+	align-items: center; */
+}
+
+#input_post {
+
+	border: none;
+	outline: none;
+	margin-left: 10px;
+}
+
+#post_photo {
+
+	margin-right: 5px;
+}

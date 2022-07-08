@@ -1,0 +1,30 @@
+<div style="display: flex; flex-direction: column; margin-top: 25px; border-radius: 5px; padding: 7px; background-color: white; box-shadow: rgb(0 0 0 / 24%) 0px 3px 8px;">
+    <div style="margin-bottom: 10px; border-bottom: 1px solid gray; padding-bottom: 5px;">
+        {{$_RESULTS_FOUND_LABEL}}
+    </div>
+    <div *ngFor="let user of $_LIST" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+        <div style="display: flex; align-items: center;">
+            <img [src]="baseUrl + '/api/' + user.Avatar_Path" style="width: 50px; height: 50px; margin-right: 15px; border-radius: 25px;">
+            <div style="display: flex; flex-direction: column;">
+                <div>
+                    {{user.Name}} {{user.Surname}}
+                </div>
+                <div>
+                    {{user.Name_City}}, {{user.Name_Country}}
+                </div>
+            </div>
+        </div>
+        <!--  [ngStyle]="{'background-color':'blanchedalmond'}" -->
+        <button *ngIf="user.friend_status == 'Yes'" id="{{'add_to_friends_btn' + user.spec_num}}" type="button" class="add_to_friends_btn btn btn-primary buttons" (click)="openMessenger()">
+            Send message
+        </button>
+        <!--  [ngStyle]="{'background-color':'cadetblue'}" -->
+        <button *ngIf="user.friend_status == 'Pending'" id="{{'add_to_friends_btn' + user.spec_num}}" type="button" class="add_to_friends_btn btn btn-danger buttons" (click)="cancelFriendshipRequest(user)">
+            Cancel request
+        </button>
+        <!--  [ngStyle]="{'background-color':'blanchedalmond'}" -->
+        <button *ngIf="user.friend_status == 'No'" id="{{'add_to_friends_btn' + user.spec_num}}" type="button" class="add_to_friends_btn btn btn-success buttons" (click)="addToFriends(user)">
+            Add to friends
+        </button>
+    </div>
+</div>

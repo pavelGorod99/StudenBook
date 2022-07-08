@@ -1,0 +1,630 @@
+<app-registration-head></app-registration-head>
+
+<style>
+    #phoneDiv {
+        width: 100%!important;
+    }
+
+    #phoneDiv > div {
+	    width: 100%!important;
+    }   
+
+    .iti.iti--allow-dropdown { width: 100% }
+</style>
+
+<div class="bg-light position-absolute w-100 h-100 d-flex justify-content-center align-items-center opacity-50" style="z-index: 99999; opacity: 50%; display: none!important;" id="loadingDataSpinner">
+    <div class="spinner-grow" role="status">
+      <span class="visually-hidden">Loading...</span>
+    </div>
+</div>
+
+<div id="registration_content" class="w-100 d-flex justify-content-center">
+    <div id="registration_form" class="display d-flex flex-column justify-content-center pt-3">
+        <h1 id="reg_h1" class="display">Registration</h1>
+        <form id="registrationForm" class="row d-flex justify-content-center mt-2 border border-2 p-3 rounded" action="" method="post">
+            <div class="col-sm-12 col-md-6">
+                <div class="mb-3">
+                    <label for="_inputName" class="form-label" id="inputNameLabel">Name</label>
+                    <input type="text" class="form-control" id="_inputName" name="Name" [(ngModel)]="$regName" (keyup)="onInputName($event)">
+                </div>
+            </div>
+            <div class="col-sm-12 col-md-6">
+                <div class="mb-3">
+                    <label for="_inputSurname" class="form-label" id="inputSurnameLabel">Surname</label>
+                    <input type="text" class="form-control" id="_inputSurname" name="Surname" [(ngModel)]="$regSurname" (keyup)="onInputSurname($event)">
+                    <div id="surnameErr" class="form-text"></div>
+                </div>
+            </div>
+            <div class="col-12">
+                <div class="mb-3">
+                    <label for="_inputEmail" class="form-label" id="inputEmailLabel">Email address</label>
+                    <input type="email" class="form-control" id="_inputEmail" name="Email" aria-describedby="emailHelp" [(ngModel)]="$regEmail" (keyup)="onInputEmail($event)">
+                    <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div>
+                </div>
+            </div>
+
+            <div class="col-12">
+                <div class="mb-3">
+                    <label for="_inputPass" class="form-label" id="inputPassLabel">Password</label>
+                    <input type="password" class="form-control" id="_inputPass" name="Pass" [(ngModel)]="$regPass">
+                </div>
+            </div>
+
+            <div class="col-12">
+                <div class="mb-3">
+                    <label for="phone" id="inputPhoneNumber">Phone number</label>
+                    <div id="phoneDiv">
+                        <input id="phone" name="phone" type="tel" [(ngModel)]="$regPhoneNumber" class="form-control w-100" placeholder="Phone number" (keyup)="checkIfBasicInputsAreFilled()">
+                    </div>
+                    <div class="alert alert-info" style="display: none;"></div>
+                </div>
+            </div>
+
+            <div class="col-12">
+                <label class="form-label" id="birthDateLabel">{{$dateBirthLabel}}</label>
+            </div>
+
+            <div class="col-4">
+                <div class="mb-3">
+                    <select id="day" name="day" [(ngModel)]="$regDbDay" (ngModelChange)="checkDayRadio()" class="form-select" aria-label="Default select example">
+                        <option value="day" disabled selected>day</option>
+                        <option *ngFor="let day of $days; index as i">
+                            {{day}}
+                        </option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="col-4">
+                <div class="mb-3">
+                    <select id="month" name="month" [(ngModel)]="$regDbMonth" (ngModelChange)="checkMonthRadio()" class="form-select" aria-label="Default select example">
+                        <option value="mon" disabled selected>mon</option>
+                        <option *ngFor="let month of $months; index as i" value="{{i + 1}}">
+                            {{month}}
+                        </option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="col-4">
+                <div class="mb-3">
+                    <select id="year" name="year" [(ngModel)]="$regDbYear" (ngModelChange)="checkYearRadio()" class="form-select" aria-label="Default select example">
+                        <option value="year" disabled selected>year</option>
+                        <option *ngFor="let year of $years; index as i">
+                                {{year}}
+                        </option>
+                    </select>
+                </div>
+            </div>
+            <div class="col-12">
+                <label class="form-label" id="genderLabel">{{$genderLabel}}</label>
+                <fieldset class="w-100 d-flex justify-content-between">
+                    <div class="col-4">
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="gender" value="woman" id="woman" [(ngModel)]="$regGender" (click)="regGender()">
+                            <label class="form-check-label" for="woman">
+                                Woman
+                            </label>
+                        </div>
+                    </div>
+                    <div class="col-4 d-flex justify-content-center">
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="gender" value="male" id="male" [(ngModel)]="$regGender" (click)="regGender()">
+                            <label class="form-check-label" for="male">
+                                Male
+                            </label>
+                        </div>
+                    </div>
+                    <div class="col-4 d-flex flex-row-reverse">
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="gender" value="other" id="other" [(ngModel)]="$regGender" (click)="regGender()">
+                            <label class="form-check-label" for="other">
+                                Other
+                            </label>
+                        </div>
+                    </div>
+                </fieldset>
+            </div>
+
+            <div class="col-12">
+                <label class="form-label" id="homeLocationLabel">{{$homeLocationLabel}}</label>
+            </div>
+
+            <div class="col-sm-12 col-md-6">
+                <div class="mb-3">
+                    <select id="home_country" name="country" 
+                            [(ngModel)]="$regHomeCountry" 
+                            (ngModelChange)="choseHomeCountry()" class="form-select" aria-label="Default select example">
+                        <option value="country" disabled selected>Country</option>
+                        <option *ngFor="let country of $countryList; index as i" value="{{country.Id_Country}}">
+                            {{country.Name_Country}}
+                        </option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="col-sm-12 col-md-6">
+                <div class="mb-3">
+                    <select id="home_city" name="cityVillage" 
+                            [(ngModel)]="$regHomeCity" 
+                            [disabled]="$HlcvIsDisabled" 
+                            (ngModelChange)="chosenHomeCityVillage()" class="form-select" aria-label="Default select example">
+                        <option value="city or village" disabled selected>City or village</option>
+                        <option *ngFor="let city of $cityList; index as i" value="{{city.Id_City}}">
+                                {{city.Name_City}}
+                        </option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="col-12">
+                <label class="form-label" id="roleLabel">{{$roleLabel}}</label>
+                <fieldset style="width: 100%;" class="d-flex justify-content-between" [disabled]="$roleIsDisabled">
+                    <div class="col-4">
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" 
+                                                            name="role" 
+                                                            value="schoolchild" 
+                                                            id="schoolchild" [(ngModel)]="$regRole" (click)="schoolCheckIn()">
+                            <label class="form-check-label" for="schoolchild">
+                                Schoolchild
+                            </label>
+                        </div>
+                    </div>
+                    <div class="col-4 d-flex justify-content-center">
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" 
+                                                            name="role" 
+                                                            value="student" 
+                                                            id="student" [(ngModel)]="$regRole" (click)="studenCheckIn()">
+                            <label class="form-check-label" for="student">
+                                Student
+                            </label>
+                        </div>
+                    </div>
+                    <div class="col-4 d-flex flex-row-reverse">
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" 
+                                                            name="role" 
+                                                            value="teacher" 
+                                                            id="teacher" [(ngModel)]="$regRole" (click)="teachCheckIn()">
+                            <label class="form-check-label" for="teacher">
+                                Teacher
+                            </label>
+                        </div>
+                    </div>
+                </fieldset>
+            </div>
+
+            <div id="univ_struc" class="w-100 row m-0 p-0" [hidden]="$hideUniversityStruc">
+
+                <div class="col-12">
+                    <label class="form-label" id="universityLocationLabel">{{$univLocationLabel}}</label>
+                </div>
+
+                <div class="col-sm-12 col-md-6">
+                    <div class="mb-3">
+                        <select id="univ_country" name="unCountry" 
+                                [(ngModel)]="$regUniverCountryLocation"
+                                (ngModelChange)="stChoseCountry()" class="form-select" aria-label="Default select example">
+                            <option value="country" disabled selected>Country</option>
+                            <option *ngFor="let country of $countryList; index as i" value="{{country.Id_Country}}">
+                                {{country.Name_Country}}
+                            </option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="col-sm-12 col-md-6">
+                    <div class="mb-3">
+                        <select id="univ_city" name="unCity" 
+                                [(ngModel)]="$regUcvLocation" 
+                                [disabled]="$ulcvIsDisabled" 
+                                (ngModelChange)="stChoseCity()" class="form-select" aria-label="Default select example">
+                            <option value="city or village" disabled selected>City or village</option>
+                            <option *ngFor="let city of $citySuList; index as i" value="{{city.Id_City}}">
+                                    {{city.Name_City}}
+                            </option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="col-12">
+                    <label class="form-label" id="universityNameLabel">{{$univNameLabel}}</label>
+                </div>
+
+                <div class="col-12">
+                    <div class="mb-3">
+                        <select id="univName" name="univName" 
+                                [(ngModel)]="$regUName" 
+                                [disabled]="$unIsDisabled" 
+                                (ngModelChange)="stChoseUniversity()" class="form-select" aria-label="Default select example">
+                            <option value="university" disabled selected>University name</option>
+                            <option *ngFor="let university of $universityList; index as i" value="{{university.Id_University}}">
+                                    {{university.Name_University}}
+                            </option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="col-12">
+                    <label class="form-label" id="facultyNameLabel">{{$faclNameLabel}}</label>
+                </div>
+
+                <div class="col-12">
+                    <div class="mb-3">
+                        <select id="facultyName" name="facultyName" 
+                                [(ngModel)]="$regUFaculty" 
+                                [disabled]="$ufIsDisabled" 
+                                (ngModelChange)="stChoseFaculty()" class="form-select" aria-label="Default select example">
+                            <option value="faculty" disabled selected>Faculty name</option>
+                            <option *ngFor="let faculty of $_FACULTY_LIST; index as i" value="{{faculty.Id_Faculty}}">
+                                    {{faculty.Name_Faculty}}
+                            </option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="col-12">
+                    <label class="form-label" id="typeOfStudyLabel">{{$typeOfStudyLabel}}</label>
+                    <fieldset class="w-100 d-flex justify-content-between" [disabled]="$utsIsDisabled">
+                        <div [ngClass]=" $hideDoctorateProgram ? 'col-6': 'col-4' ">
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" 
+                                                                name="typeOfStudy" 
+                                                                value=1 
+                                                                id="license" 
+                                                                [(ngModel)]="$regUTypeOfStudy" 
+                                                                (change)="specCheckIn($event)">
+                                <label class="form-check-label" for="license">
+                                    Bachelor
+                                </label>
+                            </div>
+                        </div>
+                        <div [ngClass]=" $hideDoctorateProgram ? 'col-6 d-flex flex-row-reverse': 'col-4 d-flex justify-content-center' ">
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" 
+                                                                name="typeOfStudy" 
+                                                                value=2 
+                                                                id="master" 
+                                                                [(ngModel)]="$regUTypeOfStudy" 
+                                                                (change)="specCheckIn($event)">
+                                <label class="form-check-label" for="master">
+                                    Master
+                                </label>
+                            </div>
+                        </div>
+                        <div [ngClass]="$hideDoctorateProgram ? 'd-none': 'col-4 d-flex flex-row-reverse'">
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" 
+                                                                name="typeOfStudy" 
+                                                                value=3 
+                                                                id="doctorate" 
+                                                                [(ngModel)]="$regUTypeOfStudy" 
+                                                                (change)="domnCheckIn($event)">
+                                <label class="form-check-label" for="doctorate">
+                                    Doctorate
+                                </label>
+                            </div>
+                        </div>
+                    </fieldset>
+                </div>
+
+                <div id="specializationNameContainer" class="w-100 row m-0 p-0" [hidden]="$hideSpecStruc">
+                    <div class="col-12">
+                        <label class="form-label" id="specializationNameLabel">{{$specNameLabel}}</label>
+                    </div>
+
+                    <div class="col-12">
+                        <div class="mb-3">
+                            <select id="specName" name="specName" 
+                                    [(ngModel)]="$regUSpecialization" 
+                                    (ngModelChange)="stChoseSpecialization()" class="form-select" aria-label="Default select example">
+                                <option value="specialization" disabled selected>Specialization name</option>
+                                <option *ngFor="let specialization of $specializationList; index as i" value="{{specialization.Id_Specialization}}">
+                                        {{specialization.Name_Specialization}}
+                                </option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="domenianNameContainer" class="w-100 row m-0 p-0" [hidden]="$hideDomnStruc">
+                    <div class="col-12">
+                        <label class="form-label" id="domanianNameLabel">{{$domNameLabel}}</label>
+                    </div>
+
+                    <div class="col-12">
+                        <div class="mb-3">
+                            <select id="domName" name="domName" 
+                                    [(ngModel)]="$regUDomanian" 
+                                    (ngModelChange)="stChoseDomanian()" class="form-select" aria-label="Default select example">
+                                <option value="domanian" disabled selected>Domenian name</option>
+                                <option *ngFor="let domanian of $specializationList; index as i" value="{{domanian.Id_Specialization}}">
+                                        {{domanian.Name_Specialization}}
+                                </option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="yearOfStudingContainer" class="w-100 row m-0 p-0" [hidden]="$hideYsStruc">
+                    <div class="col-12">
+                        <label class="form-label" id="yeLabel">{{$ysLabel}}</label>
+                    </div>
+
+                    <div class="col-12">
+                        <div class="mb-3">
+                            <select id="yearOfStud" name="yearOfStud" 
+                                    [(ngModel)]="$regUYearOfStudy" 
+                                    [disabled]="$usyIsDisabled" class="form-select" aria-label="Default select example">
+                                    <option value="year" disabled selected>Year of studying</option>
+                                    <option *ngFor="let year of $ys; index as i">
+                                          {{year}}
+                                    </option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+            </div>        
+            <div id="schol_struc" class="w-100 row m-0 p-0" [hidden]="$hideSchoolStruc">
+
+                <div class="col-12">
+                    <label class="form-label" id="schoolLocationLabel">{{$schoolLocationLabel}}</label>
+                </div>
+
+                <div class="col-sm-12 col-md-6">
+                    <div class="mb-3">
+                        <select id="school_country" name="schCountry" 
+                                [(ngModel)]="$regScLocation"
+                                (ngModelChange)="scChoseCountry()" class="form-select" aria-label="Default select example">
+                            <option value="country" disabled selected>Country</option>
+                            <option *ngFor="let country of $countryList; index as i" value="{{country.Id_Country}}">
+                                {{country.Name_Country}}
+                            </option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="col-sm-12 col-md-6">
+                    <div class="mb-3">
+                        <select id="school_city" name="schCity" 
+                                [(ngModel)]="$regScvLocation" 
+                                [disabled]="$slcvIsDisabled" 
+                                (ngModelChange)="scChoseCity()" class="form-select" aria-label="Default select example">
+                            <option value="city or village" disabled selected>City or village</option>
+                            <option *ngFor="let city of $citySchList; index as i" value="{{city.Id_City}}">
+                                    {{city.Name_City}}
+                            </option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="col-12">
+                    <label class="form-label" id="schoolLabelName">{{$schoolNameLabel}}</label>
+                </div>
+
+                <div class="col-12">
+                    <div class="mb-3">
+                        <select id="schoolName" name="schoolName" 
+                                [(ngModel)]="$regSchoolName" 
+                                [disabled]="$snIsDisabled" 
+                                (ngModelChange)="scChoseSchool()" class="form-select" aria-label="Default select example">
+                            <option value="school" disabled selected>School name</option>
+                            <option *ngFor="let school of $schoolList; index as i" value="{{school.Id_School}}">
+                                    {{school.Name_school}}
+                            </option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="col-12">
+                    <label class="form-label" id="classAreYouInLabel">{{$classAreYouInLabel}}</label>
+                </div>
+
+                <div class="col-12">
+                    <div class="mb-3">
+                        <select id="class_in" name="class_in" 
+                                [(ngModel)]="$regSchoolClassIn" 
+                                [disabled]="$sciIsDisabled" 
+                                class="form-select" aria-label="Default select example">
+                            <option value="class_in" disabled selected>What class are you in?</option>
+                            <option *ngFor="let classes of $classes; index as i">
+                                    {{classes}}
+                            </option>
+                        </select>
+                    </div>
+                </div>
+
+            </div>
+            <div id="teach_struc" class="w-100 row m-0 p-0" [hidden]="$hideTeacherStruc">
+
+                <div class="col-12">
+                    <label class="form-label" id="teachPlaceRorkLabel">{{$regTeachPwLabel}}</label>
+                </div>
+
+                <div class="col-12">
+                    <fieldset class="w-100 d-flex justify-content-between">
+                        <div class="col-4">
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" 
+                                                                name="place_of_work" 
+                                                                value="school_w" 
+                                                                id="school_w" 
+                                                                [(ngModel)]="$regSuw" 
+                                                                (change)="placeWorkSchool()">
+                                <label class="form-check-label" for="school_w">
+                                    School
+                                </label>
+                            </div>
+                        </div>
+                        <div class="col-4 d-flex flex-row-reverse">
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" 
+                                                                name="place_of_work" 
+                                                                value="university_w" 
+                                                                id="university_w" 
+                                                                [(ngModel)]="$regSuw" 
+                                                                (change)="placeWorkUniversity()">
+                                <label class="form-check-label" for="university_w">
+                                    University
+                                </label>
+                            </div>
+                        </div>
+                    </fieldset>
+                </div>
+
+                <div id="school_work_struc" class="w-100 row m-0 p-0" [hidden]="$hideSwStruc">
+
+                    <div class="col-12">
+                        <label class="form-label" id="schoolWorkLocationLabel">{{$schoolWorkLocationLabel}}</label>
+                    </div>
+
+                    <div class="col-sm-12 col-md-6">
+                        <div class="mb-3">
+                            <select id="school_country" name="schCountryW" 
+                                    [(ngModel)]="$regScwLoc" 
+                                    (ngModelChange)="tchChosenSchCountry()" class="form-select" aria-label="Default select example">
+                                <option value="country" disabled selected>Country</option>
+                                <option *ngFor="let country of $countryList; index as i" value="{{country.Id_Country}}">
+                                    {{country.Name_Country}}
+                                </option>
+                            </select>
+                        </div>
+                    </div>
+    
+                    <div class="col-sm-12 col-md-6">
+                        <div class="mb-3">
+                            <select id="school_city" name="schCityW" 
+                                    [(ngModel)]="$regScvwLoc" 
+                                    [disabled]="$sclvwIsDisabled" 
+                                    (ngModelChange)="tchChosenSchCity()" class="form-select" aria-label="Default select example">
+                                <option value="city or village" disabled selected>City or village</option>
+                                <option *ngFor="let city of $citySchTList; index as i" value="{{city.Id_City}}">
+                                        {{city.Name_City}}
+                                </option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="col-12">
+                        <label class="form-label" id="schoolNameLabel">{{$schoolNameLabel}}</label>
+                    </div>
+
+                    <div class="col-12">
+                        <div class="mb-3">
+                            <select id="schoolName" name="schoolNameWork" 
+                                    [(ngModel)]="$regSwName" 
+                                    [disabled]="$snwIsDisabled" 
+                                    (ngModelChange)="enableTeacherRoleField()" class="form-select" aria-label="Default select example">
+                                <option value="schoolNameWork" disabled selected>School name</option>
+                                <option *ngFor="let school of $schoolList; index as i" value="school.Id_School">
+                                        {{school.Name_school}}
+                                </option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="col-12">
+                        <div class="mb-3">
+                            <label for="inputTeacherRole" id="teachRsLabel" class="form-label">{{$teachRsLabel}}</label>
+                            <input type="text"  class="form-control" 
+                                                id="inputTeacherRole" 
+                                                name="role_in_school" 
+                                                placeholder="Role in school"
+                                                [(ngModel)]="$regRoleInSchool" 
+                                                (keyup)="onInputTeacherSchooleRole($event)">
+                        </div>
+                    </div>
+
+                </div>
+
+                <div id="university_work_struc" class="w-100 row m-0 p-0" [hidden]="$hideUwStruc">
+
+                    <div class="col-12">
+                        <label class="form-label" id="universityWorkLocationLabel">{{$universityWorkLocationLabel}}</label>
+                    </div>
+
+                    <div class="col-sm-12 col-md-6">
+                        <div class="mb-3">
+                            <select id="university_work_country" name="univCountryW" 
+                                    [(ngModel)]="$regUcwLoc" 
+                                    (ngModelChange)="tchChosenUnivCountry()" class="form-select" aria-label="Default select example">
+                                <option value="country" disabled selected>Country</option>
+                                <option *ngFor="let country of $countryList; index as i" value="{{country.Id_Country}}">
+                                    {{country.Name_Country}}
+                                </option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="col-sm-12 col-md-6">
+                        <div class="mb-3">
+                            <select id="university_work_city" name="univCityW" 
+                                    [(ngModel)]="$regUcvwLoc" 
+                                    [disabled]="$ucvwIsDisabled" 
+                                    (ngModelChange)="tchChosenUnivCity()" class="form-select" aria-label="Default select example">
+                                <option value="city or village" disabled selected>City or village</option>
+                                <option *ngFor="let city of $cityUnivTList; index as i" value="{{city.Id_City}}">
+                                        {{city.Name_City}}
+                                </option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="col-12">
+                        <label class="form-label" id="universityWorkNameLabel">{{$univNameLabel}}</label>
+                    </div>
+
+                    <div class="col-12">
+                        <div class="mb-3">
+                            <select id="univNameWork" name="univNameWork" 
+                                    [(ngModel)]="$regUwName" 
+                                    [disabled]="$unwIsDisabled" 
+                                    (ngModelChange)="tchChosenUniversity()" class="form-select" aria-label="Default select example">
+                                <option value="univNameWork" disabled selected>University name</option>
+                                <option *ngFor="let university of $universityList; index as i" value="{{university.Id_University}}">
+                                        {{university.Name_University}}
+                                </option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="col-12">
+                        <div class="mb-3">
+                            <label for="inputTeacherRole" id="teachRuLabel" class="form-label">{{$teachRuLabel}}: {{$regIturErr}}</label>
+                            <input type="text"  class="form-control" 
+                                                id="inputTeacherRole" 
+                                                name="role_in_university" 
+                                                placeholder="Role in university"
+                                                [(ngModel)]="$regRoleInUniversity" 
+                                                (keyup)="onInputTeacherUniversityRole($event)">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-12">
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" 
+                                                    value="true" 
+                                                    id="flexCheckDefault" 
+                                                    name="I_agree"
+                                                    [(ngModel)]="$regAgree">
+                    <label class="form-check-label" for="flexCheckDefault">
+                        <a id="termsCond" href="#">I agree with Terms and Conditions</a>
+                    </label>
+                </div>
+            </div>    
+
+            <div class="col-12">
+                <label class="form-label" id="_ia">{{$regUserExistsErr}}</label>
+            </div>
+
+            <div class="col-12">
+                <button type="button" id="ca_button" class="btn btn-success w-100" name="create_an_account" (click)="submit()">Continue</button>
+            </div>
+        </form>
+    </div>
+</div>

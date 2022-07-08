@@ -1,0 +1,2 @@
+users/name$surname$email$password/
+temp/user/name$surname$email$password/profile_image/

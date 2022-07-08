@@ -1,0 +1,18 @@
+<app-search-result style="position: absolute;"></app-search-result>
+<div id="nav_profile_image" class="display">
+    <a href="#" id="nav_profile_image_button" class="display">
+        <label id="uploadProfilePhoto">
+            <form id="formUploadProfilePhoto" method="post" enctype="multipart/form-data">
+                <input id="inputProfilePhoto" type="file" accept="image/*" name="profileImage" (change)="onFileUpload($event)"/>
+            </form>
+            <!-- src="<?php echo $userProfileImage ?>" -->
+            <img id="default_profile_avatar" [src]="$userProfileImage">
+            <!-- <img id="default_profile_avatar"> -->
+        </label>
+    </a>
+</div>
+<div id="nav_username" class="display">
+    <!-- <?php echo $_USERNAME; ?> -->
+    <h3 id="username">{{$_USER_NAME}}</h3>
+    <!-- <h3 id="username">Pashka kakaska</h3> -->
+</div>
