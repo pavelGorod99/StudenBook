@@ -31,10 +31,10 @@ chrome-profiler-events*.json
 .history/*
 
 # misc
-.angular/cache
-.custom_module
-.database_BACKUP
-.node_modules
+/angular/cache
+/custom_module/ngx-drag-scoll
+/database_BACKUP
+/node_modules
 /.angular/cache
 /.sass-cache
 /connect.lock
