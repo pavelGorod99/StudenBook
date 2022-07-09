@@ -26,10 +26,4 @@ export class MenuLeftSideComponent implements OnInit {
     this.sectionContainerService.displayItem(OPTION)
     sessionStorage.setItem('CURRENT_PATH', OPTION)
   }
-
-  goToFriends() {
-    this.router.navigate(['/home/friends'])
-    this.sectionContainerService.displayItem('friends')
-    sessionStorage.setItem('CURRENT_PATH', 'friends')
-  }
 }

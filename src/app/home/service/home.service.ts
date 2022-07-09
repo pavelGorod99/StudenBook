@@ -23,6 +23,13 @@ export class HomeService {
     return this.http.post(`${environment.apiHost}/api/get_user_income_call_info.php`, {_userId: ID})
   }
 
+  getProfileImagePath($userId: number) {
+    let params = new HttpParams()
+    params = params.set('userId', $userId)
+    return this.http.get(`${environment.apiHost}/get_profile_avatar`, {
+      params: params
+    })
+  }
   
 
   // sendMessageToUser($userId: number, $_FRIEND_ID: number, $_MESSAGE: string) {

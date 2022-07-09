@@ -124,39 +124,172 @@
     </div>
 </nav> -->
 
-<nav class="navbar navbar-expand-md navbar-dark bg-dark sidebarNavigation ms-0 me-0" data-sidebarClass="navbar-dark bg-dark">
+
+<!--  data-sidebarClass="navbar-dark bg-white" -->
+<!-- navbar-dark bg-dark -->
+<!--  style="background-color: white" -->
+<!--  navbar-dark bg-dark -->
+<nav class="navbar navbar-expand-md navbar-light bg-lignt nav-header sidebarNavigation ms-0 me-0 padding-left fix-header-on-top" data-sidebarClass="navbar-light bg-light">
     
-    <div class="container-fluid d-flex justify-content-center">
+    <div class="container-fluid d-flex justify-content-center cancel-margins align-left">
         <div class="row w-100">
-            <div class="col-4 d-flex flex-row-reverse">
-                <a class="navbar-brand d-flex me-5" href="/home" (click)="goToMain()">
+            <div class="col-3 d-flex justify-end pe-0 cancel-margins margin-left-logo">
+                <!-- background-color: #212121; -->
+                <button id="burgerBtn" class="navbar-toggler leftNavbarToggler" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault" style="color: rgba(255, 255, 255, 0.5); border-color: rgba(255, 255, 255, 0.1); background-color: silver!important;"
+                    aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <a class="navbar-brand d-flex" href="/home" (click)="goToMain()">
                     <div id="logo_background">
                         <img id="logo_img" src="assets/img/logo_icon.png">
                     </div>
                     <h2 id="logo_h2" class="d-flex justify-content-center align-content-center m-0 mt-1">StudenBook</h2>
                 </a>
 
-                <button class="navbar-toggler leftNavbarToggler" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault"
-                    aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
+                
             </div>
-            <div class="col-8 d-flex">
-                <div class="collapse navbar-collapse d-flex" id="navbarsExampleDefault">
-    
-                    <form class="form-inline my-2 my-lg-0">
-                        <input class="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search">
-                        <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
-                    </form>
+            <div class="col-8 d-flex hide-desktop-menu">
+                
+                <div class="collapse navbar-collapse d-flex justify-content-between" id="navbarsExampleDefault">
+                    <div class="d-flex">
+                        <form class="form-inline my-2 my-lg-0">
+                            <input class="form-control mr-sm-2 w-100" id="search_bar" type="search" name="search_bar" [(ngModel)]="this.searchText.$_SEARCH_TEXT" (keyup)="onKeydownSearch($event)" (keydown.enter)=onKeydown($event) (search)="clearSearch($event)" placeholder="&#xF002; Search" style="font-family:Arial, FontAwesome" aria-label="Search">
+                            <div class="search-result" *ngFor="let result of results$ | async"></div>
+                        </form>
+
+                        <div class = "block_notification">
+                            <div id="h_notification_icon" class="display">
+                                <a id="notification_button" class="display" (click)="showNotificationContainer()">
+                                    <img id="notification_icon" src="assets/img/notification_icon.png">
+                                </a>
+                                <div *ngIf="$_NOTIF_COUNT > 0" class="notif_count display" id="notif_countDiv">
+                                    {{$_NOTIF_COUNT}}
+                                </div>
+                            </div>
+                            <div id="notification_container" class = 'zona_notificari'>
+                                <div *ngIf="$_NOTIF_COUNT == -1" class="p-2">
+                                    You do not have notifications
+                                </div>
+                                <div style="display: flex; flex-direction: column; padding: 7px;" *ngFor="let notif of $_NOTIF_LIST">
+                                    <div id="{{'friendship_req_btn' + notif.spec_num_notif}}">
+                                        <div style="width: 100; text-align: center; border-bottom: 1px solid gray; padding-bottom: 5px;">
+                                            Friendship request
+                                        </div>
+                                        <div style="display: flex; flex-direction: row; justify-content: space-between; align-items: center; margin-top: 10px; margin-bottom: 10px;">
+                                            <div style="display: flex;" class="h-100 d-flex justify-content-center align-content-center">
+                                                <div class="d-flex flex-column justify-content-center align-content-center">
+                                                    <img src="{{$_API_HOST}}/api/{{notif.Avatar_Path}}" height="35" width="35">
+                                                </div>
+                                                <div style="margin-left: 10px;">
+                                                    <div>{{notif.Surname}} {{notif.Name}}</div>
+                                                    <div>{{notif.Name_City}}, {{notif.Name_Country}}</div>
+                                                </div>
+                                            </div>
+                                            <div style="display: flex; flex-direction: column; align-items: center;">
+                                                <div>
+                                                    <button type="button" class="btn btn-success mb-2" (click)="acceptFriendship(notif.ID, true, notif)" style="width: 80px;">Accept</button>
+                                                </div>
+                                                <div>
+                                                    <button type="button" class="btn btn-danger" (click)="acceptFriendship(notif.ID, false, notif)" style="width: 80px;">Reject</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
                     <!-- mr-auto -->
-                    <ul class="navbar-nav m-0">
+                    <ul class="navbar-nav m-0" style="margin-right: 10%!important">
+                        <div class="menu-side-for-mobile">
+                            <li class="nav-item active">
+                                <div id="nav_profile_image" class="display">
+                                        <label id="uploadProfilePhoto">
+                                            <img id="default_profile_avatar1" [src]="$userProfileImage1">
+                                        </label>
+                                </div>
+                            </li>
+                            <li class="nav-item active h5">
+                                {{$_FULL_NAME_USER}}
+                            </li>
+                            <li class="nav-item active">
+                                <a class="nav-link" (click)="showItem('news')">
+                                    <div id="news" class="display">
+                                        <img src="assets/icons/news.png" width="22" height="17.6" class="opts">
+                                        <span class="opts ms-2">News</span>
+                                    </div>
+                                </a>
+                            </li>
+                            <li id="conversations" class="nav-item active">
+                                <a class="nav-link" (click)="showItem('conversations')">
+                                    <div class="display">
+                                        <img src="assets/icons/conversations.png" width="22" height="17.6" class="opts">
+                                        <span class="opts ms-2">Conversations</span>
+                                    </div>
+                                </a>
+                            </li>
+                            <li class="nav-item active">
+                                <a class="nav-link" (click)="showItem('friends')">
+                                    <div id="friends" class="display">
+                                        <img src="assets/icons/friends.png" width="22" height="17.6" class="opts">
+                                        <span class="opts ms-2">Friends</span>
+                                    </div>
+                                </a>
+                            </li>
+                            <li class="nav-item active">
+                                <a class="nav-link" (click)="showItem('groups')">
+                                    <div id="groups" class="display">
+                                        <img src="assets/icons/groups.png" width="22" height="17.6" class="opts">
+                                        <span class="opts ms-2">Groups</span>
+                                    </div>
+                                </a>
+                            </li>
+                            <li class="nav-item active">
+                                <a class="nav-link" (click)="showItem('photos')">
+                                    <div id="photos" class="display">
+                                        <img src="assets/icons/photos.png" width="22" height="17.6" class="opts">
+                                        <span class="opts ms-2">Photos</span>
+                                    </div>
+                                </a>
+                            </li>
+                            <li class="nav-item active">
+                                <a class="nav-link" (click)="showItem('settings')">
+                                    <div id="settings" class="display">
+                                        <img src="assets/icons/settings.png" width="22" height="17.6" class="opts">
+                                        <span class="opts ms-2">Settings</span>
+                                    </div>
+                                </a>
+                            </li>
+                        </div>
+                        <div class="option-for-desktop d-flex">
+                            <li class="nav-item active d-flex">
+                                <div class="d-flex flex-column justify-content-center me-2">
+                                    <img src="assets/img/user_icon.png" height="35" width="35">
+                                </div>
+                                <div class="d-flex flex-column justify-content-center me-2">
+                                    <img src="assets/img/down_arrow_login.png" height="15" width="20">
+                                </div>
+                                <!-- <div id="log_in_out_button" class="display">
+                                    <div class="log_in_out_ch">{{$_FULL_NAME_USER}}</div>
+                                    <div class="log_in_out_ch">
+                                        <img src="assets/img/user_icon.png">
+                                    </div>
+                                    <div class="log_in_out_ch">
+                                        <img src="assets/img/down_arrow_login.png">
+                                    </div>
+                                </div> -->
+                            </li>
+                        </div>
                         <li class="nav-item active">
-                            <a class="nav-link" href="#">Home
-                                <span class="sr-only">(current)</span>
+                            <a class="nav-link">
+                                <div id="news" class="display">
+                                    <button type="button" class="btn btn-secondary">Sign out</button>
+                                </div>
                             </a>
                         </li>
                     </ul>
-                    
                 </div>
             </div>
         </div>

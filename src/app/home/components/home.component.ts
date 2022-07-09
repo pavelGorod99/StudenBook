@@ -288,13 +288,12 @@ export class HomeComponent implements OnInit, AfterViewInit {
   }
 
   setProfileImage() {
-    let params = new HttpParams()
-    params = params.set('userId', this.$userId)
-    this.http.get(`${environment.apiHost}/get_profile_avatar`, {
-      params: params
-    }).subscribe((data: any) => {
+
+    this.homeService.getProfileImagePath(this.$userId)
+      .subscribe((data: any) => {
       
       this.$userProfileImage = environment.apiHost + data;
+      console.log("HOME PROFILE PHOTO: " + this.$userProfileImage);
       
     }, (err) => {
 

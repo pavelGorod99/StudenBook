@@ -1,6 +1,6 @@
 import { LocationStrategy } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
-import { Component, OnInit } from '@angular/core';
+import { AfterViewInit, ChangeDetectorRef, Component, OnChanges, OnInit, SimpleChanges } from '@angular/core';
 import { Router } from '@angular/router';
 import { time } from 'console';
 import { Observable, of, Subject } from 'rxjs';
@@ -12,59 +12,26 @@ import { SearchTextService } from '../search-result-service/search-text.service'
 import ShortUniqueId from 'short-unique-id';
 import { environment } from 'src/environments/environment';
 
-$(document).ready( function () {
-  $(".sidebarNavigation .navbar-collapse")
-  .hide()
-  .clone()
-  .appendTo("body")
-  .removeAttr("class")
-  .addClass("sideMenu")
-  .show(),
-  $("body")
-  .append("<div class='overlay'></div>"),
-  $(".sideMenu")
-  .addClass(
-    $(".sidebarNavigation").attr("data-sidebarClass")!),
-    $(".navbar-toggle, .navbar-toggler").on("click", function () {
-      $(".sideMenu, .overlay").toggleClass("open"),
-      $(".overlay").on("click", function () {
-        $(this).removeClass("open"),
-        $(".sideMenu").removeClass("open")
-      })
-    }),
-    $("body").on("click",".sideMenu.open .nav-item", function () {
-      $(this).hasClass("dropdown") || $(".sideMenu, .overlay").toggleClass("open")
-    }),
-    $(window).resize( function () { 
-      $(".navbar-toggler").is(":hidden") ? $(".sideMenu, .overlay").hide() : $(".sideMenu, .overlay").show()
-    })
-  });
-
 @Component({
   selector: 'app-header',
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.css']
 })
 
-
-
-export class HeaderComponent implements OnInit {
+export class HeaderComponent implements OnInit, AfterViewInit {
 
   results$!: Observable<any>;
   subject = new Subject()
 
-  // $_LOCALHOST = 'http://localhost:'
-
-  // $_API_PATH = '/StudenBook/api/'
-
   $_API_HOST = environment.apiHost
 
-  constructor(private router: Router, private http: HttpClient, private homeService: HomeService, private dataResult: SearchResultService, private sectionContainerService: SectionContainerServiceService, public searchText: SearchTextService) { 
-
-    // if (sessionStorage.getItem('CURRENT_TEXT_SEARCH') != null)
-    // (<HTMLInputElement>document.getElementById('search_bar')).value = String(sessionStorage.getItem('CURRENT_TEXT_SEARCH'))
-    // environment.apiHost
-     
+  constructor(private router: Router, 
+              private http: HttpClient, 
+              private homeService: HomeService, 
+              private dataResult: SearchResultService, 
+              private sectionContainerService: SectionContainerServiceService, 
+              public searchText: SearchTextService,
+              private changeDetectorRef: ChangeDetectorRef) { 
   }
 
   resultData: any
@@ -100,8 +67,12 @@ export class HeaderComponent implements OnInit {
     }
   }
 
+  ngAfterViewInit(){
+    this.setProfileImage()
+    this.changeDetectorRef.detectChanges();
+  }
+
   getNotifications() {
-    // console.log("getNotifications");
 
     const uid = new ShortUniqueId({ length: 16 }); 
 
@@ -109,18 +80,16 @@ export class HeaderComponent implements OnInit {
 
       this.homeService.getNotifications(Number(sessionStorage.getItem('USER_ID'))).pipe(take(1))
       .subscribe((data: any) => {
-        // console.log("NOTIFICATIONS: " + JSON.stringify(data));
-        // alert(1)
         if (data != null) {
           if (this.$_NOTIF_COUNT < data.length) {
+
             this.$_NOTIF_COUNT = data.length;
-            // alert(this.$_NOTIF_COUNT)
+
             var count_div = <HTMLElement> document.getElementById("notif_countDiv");
             if (count_div != null)
               count_div.style.display = "block"
 
             this.$_NOTIF_LIST = data;
-
             this.$_NOTIF_LIST.forEach((element: any) => {
               element['spec_num_notif'] = uid()
             });
@@ -132,8 +101,6 @@ export class HeaderComponent implements OnInit {
       }, (err) => {
         console.log(JSON.stringify(err));
       })
-
-      // this.getNotifications()
     }, 500)
   }
 
@@ -157,42 +124,84 @@ export class HeaderComponent implements OnInit {
 
         this.$_NOTIF_COUNT = this.$_NOTIF_LIST.length
         console.log("$_NOTIF_COUNT: " + this.$_NOTIF_COUNT);
-        
 
       }, (err) => {
         console.log(JSON.stringify(err));
       })
   }
 
-  rejectFriendship($_FRIEND_ID: number) {
-
-  }
-
+  displaySectionContainer: boolean = true
   ngOnInit(): void {
-
+    this.sectionContainerService.current_section_container.subscribe(sectionContainer => {
+      this.displaySectionContainer = sectionContainer
+    })
     this.$_SEARCH_TEXT = '1';
     this.getNotifications()
-
-    // if (sessionStorage.getItem('CURRENT_TEXT_SEARCH') != null)
-    // (<HTMLInputElement>document.getElementById('search_bar')).value = String(sessionStorage.getItem('CURRENT_TEXT_SEARCH'))
-    this.dataResult.data.subscribe(resultData => this.resultData = resultData)
-
+    this.dataResult.data
+        .subscribe(resultData => this.resultData = resultData)
     this.results$ = this.subject.pipe(
       debounceTime(500),
       map(searchText => {
         console.log("RESULT: " + searchText)
-
-        // if (!this.dataResult.$_SEARCH_FINISHED) {
-
-          if (String(searchText)[0] != ' '){
-
-            this.getDataBySearching(String(searchText), true)
-          }
-
-
-        // }
+        if (String(searchText)[0] != ' '){
+          this.getDataBySearching(String(searchText), true)
+        }
       })
     )
+  }
+
+  showItem(OPTION: string) {
+    alert(OPTION)
+    let i = document.getElementById('search_bar')! as (HTMLInputElement)
+    i.value = ''
+    this.router.navigate(['/home/' + OPTION])
+    this.sectionContainerService.displayItem(OPTION)
+    sessionStorage.setItem('CURRENT_PATH', OPTION)
+  }
+
+  $userProfileImage1 = 'test'
+  setProfileImage() {
+    this.homeService.getProfileImagePath(Number(sessionStorage.getItem('USER_ID')))
+      .subscribe((data: any) => {
+      
+      this.$userProfileImage1 = environment.apiHost + '/api/' + data;
+      console.log("HEADER PROFILE PHOTO: " + this.$userProfileImage1);
+      this.setFullNameUser()
+
+      $(document).ready( function () {
+        $('#conversations').click(function(){
+          alert('clicked');
+        });
+        $(".sidebarNavigation .navbar-collapse")
+        .hide()
+        .clone()
+        .appendTo("body")
+        .removeAttr("class")
+        .addClass("sideMenu")
+        .show(),
+        $("body")
+        .append("<div class='overlay'></div>"),
+        $(".sideMenu")
+        .addClass(
+          $(".sidebarNavigation").attr("data-sidebarClass")!),
+          $(".navbar-toggle, .navbar-toggler").on("click", function () {
+            $(".sideMenu, .overlay").toggleClass("open"),
+            $(".overlay").on("click", function () {
+              $(this).removeClass("open"),
+              $(".sideMenu").removeClass("open")
+            })
+          }),
+          $("body").on("click",".sideMenu.open .nav-item", function () {
+            if ($('#conversations')) alert('exists'); else alert ('not exists')
+            $(this).hasClass("dropdown") || $(".sideMenu, .overlay").toggleClass("open")
+          }),
+          $(window).resize( function () { 
+            $(".navbar-toggler").is(":hidden") ? $(".sideMenu, .overlay").hide() : $(".sideMenu, .overlay").show()
+          })
+        });
+    }, (err) => {
+      console.log(JSON.stringify(err));
+    }); 
   }
 
   $_SHOW_FROM = 0

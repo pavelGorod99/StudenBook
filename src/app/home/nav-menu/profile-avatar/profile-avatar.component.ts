@@ -31,8 +31,9 @@ export class ProfileAvatarComponent implements OnInit {
   setProfileAvatar() {
     this.http.post(`${environment.apiHost}get_profile_avatar.php`, {_USER_ID: sessionStorage.getItem('USER_ID')})
       .subscribe((imagePath: any) => {
-
+        
         this.$userProfileImage = environment.apiHost + 'api' + imagePath
+        console.log("PROFILE AVATAR: " + this.$userProfileImage);
         
         // this.$_USER_IMAGE_PATH = imagePath
         // console.log("this.$_USER_IMAGE_PATH: " + this.$_USER_IMAGE_PATH);

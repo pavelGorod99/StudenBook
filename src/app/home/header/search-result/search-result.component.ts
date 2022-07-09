@@ -68,7 +68,7 @@ export class SearchResultComponent implements OnInit {
             this.$_no_data_found = true
           }
           else {
-            // console.log("this line 2");
+            console.log(data);
             this.$_no_data_found = false
             this.$_SEARCH_LIST = data
             this.searchResultService.schowResults.subscribe(showContainer => this.$_showSearchResultContainer = showContainer)

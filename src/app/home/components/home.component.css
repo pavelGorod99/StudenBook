@@ -46,3 +46,18 @@ body {
 	grid-row-start: 2;
 	grid-row-end: 3;
 }
+
+@media (max-width: 500px) {
+
+	.margin-bottom-header {
+		margin-bottom: 48px
+	}
+
+	.hide-aside {
+		display: none;
+	}
+
+	.hide-nav-menu {
+		display: none;
+	}
+}
