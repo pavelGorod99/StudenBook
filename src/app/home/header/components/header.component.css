@@ -127,8 +127,10 @@ body{
 	}
 	
 	#default_profile_avatar {
-		width: 150px;
-		height: 150px;
+		object-fit: cover;
+		border-radius: 50%;
+		width: 50px;
+		height: 50px;
 	}
 
 	#default_profile_avatar1 {
@@ -180,6 +182,41 @@ header {
 	align-items: center;
 }
 
+#nav_menu_options {
+
+	justify-content: center;
+	flex-direction: column;
+	padding: 10px 20px 0 20px;
+}
+
+#news {
+
+	align-items: center;
+	justify-content: flex-start;
+	width: 100%;
+}
+
+.opts {
+
+	margin-left: 10px;
+	font-family: Arial;
+}
+
+.menu_button {
+	
+	width: 100%;
+	height: 30px;
+	border-radius: 5px;
+	text-decoration: none;
+	color: black;
+	font-size: 13px;
+}
+
+.menu_button:hover {
+
+	background-color: #e5e7eb;
+}
+
 #h_center {
 
 	grid-column-start: 2;
@@ -227,6 +264,27 @@ header {
 	text-decoration: none;
 	color: white;
 }
+
+.sidenav {
+	height: 100%; /* 100% Full-height */
+	width: 0; /* 0 width - change this with JavaScript */
+	position: fixed; /* Stay in place */
+	z-index: 1; /* Stay on top */
+	top: 0; /* Stay at the top */
+	left: 0;
+	background-color: #f6f7f7; /* Black*/
+	overflow-x: hidden; /* Disable horizontal scroll */
+	padding-top: 60px; /* Place content 60px from the top */
+	transition: 0.5s; /* 0.5 second transition effect to slide in the sidenav */
+  }
+
+  .sidenav .closebtn {
+	position: absolute;
+	top: 0;
+	right: 25px;
+	font-size: 36px;
+	margin-left: 50px;
+  }
 
 #logo_background {
 
