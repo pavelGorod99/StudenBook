@@ -13,11 +13,11 @@
 
 		<div class="modal fade" id="callIncomingModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
 			<div class="modal-dialog">
-				<div class="modal-content">
+				<div class="modal-content" style="height: 90vh">
 				<div class="modal-header">
 					<h5 class="modal-title" id="staticBackdropLabel">StudenBook call</h5>
 				</div>
-				<div class="modal-body">
+				<div class="modal-body d-flex flex-column justify-content-center align-content-center">
 					<div class="w-100" id="videoCallContainer" style="display: none!important">
 						<div id="conference">
 							<div id="local-container-incoming" class="w-100"></div>
@@ -30,7 +30,7 @@
 						</div>
 	
 						<div class="d-flex justify-content-center">
-							<img [src]="$friendAvatar" style="width: 150px; height: 150px; border-radius: 50px;"/>
+							<img [src]="$friendAvatar" style="width: 300px; height: 300px; border-radius: 50px;"/>
 						</div>
 	
 						<div class="d-flex justify-content-center">

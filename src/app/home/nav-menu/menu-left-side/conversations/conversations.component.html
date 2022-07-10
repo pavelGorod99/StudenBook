@@ -1,40 +1,17 @@
-<div style="display: flex; flex-direction:column; margin-top: 25px;">
-    <div style="font-size: 130%; margin-bottom: 15px;">
+<div class="conv-container w-100 d-flex flex-column justify-content-center">
+    <div class="col-12 mb-3" style="font-size: 130%;">
         Conversation list
     </div>
 
-
-
-    <!-- Demo -->
-    <div id="container">
-      <!-- <h2 id="title">Conference demo</h2>
-
-      <form id="create">
-          <input type="text" name="conference_name" id="conference-name" placeholder="Enter your Conference name" autocomplete="off">
-          <button type="submit" id="create_conference" (click)="test()">Join conference</button>
-      </form> -->
-      <!-- <div id='callActions' style='display: none'>
-          <button type="submit" id='muteAudio'> Mute Audio</button>
-          <button type="submit" id='unMuteAudio'> Unmute Audio</button>
-          <button type="submit" id='muteVideo'> Mute Video</button>
-          <button type="submit" id='unMuteVideo'> Unmute Video</button>
-          <button id='toggle-screensharing'>Toggle screensharing</button>
-      </div> -->
-      <!-- <div id="conference">
-
-          <div id="remote-container"></div>
-          <div id="local-container"></div>
-      </div> -->
+    <div class="col-12" id="container">
     </div>
 
-
-
-    <div class="form-outline">
+    <div class="col-12 form-outline">
         <input type="search" id="form1" (keyup)="onKeydownSearchConversation($event)" (search)="clearSearch($event)" class="form-control" placeholder="Search a conversation" aria-label="Search" />
         <div class="search-result" *ngFor="let result of result$ | async"></div>
     </div>
 
-    <div class="content" id="content-container">
+    <div class="col-12 mt-2 mb-2 content" id="content-container">
       <div fxLayout="row" fxLayoutGap="5px" fxLayoutAlign="center center">
         <button type="button" class="btn btn-primary"  [disabled]="leftNavDisabled" (click)="moveLeft()" style="margin-right: 15px">
           <i class="fa fa-angle-left" aria-hidden="true"></i>
@@ -63,79 +40,69 @@
       </div>
     </div>
 
-        <!-- Modal -->
-        <div class="modal fade mb-4" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-          <div class="modal-dialog">
-            <!--  style="height: 90vh!important" -->
-            <div class="modal-content">
-              <div class="modal-header">
-                <h5 class="modal-title" id="staticBackdropLabel">StudenBook call</h5>
-                <!-- <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" (click)="hangUpTheCall()"></button> -->
+    <div id="shadowDiv" class="modal-div" style="display: none">
+    </div>
+
+    <div class="modal fade mb-4" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content" style="height: 90vh">
+          <div class="modal-header">
+            <h5 class="modal-title" id="staticBackdropLabel">StudenBook call</h5>
+          </div>
+          <div class="modal-body d-flex flex-column justify-content-center align-content-center">
+
+            <div style="max-height: 90vh;" class="d-flex flex-column align-content-center justify-content-center">
+              <div class="w-100" id="directVideoCallContainer" style="display: none!important">
+                <div id="conference">
+                  <div id="local-container-outgoing" class="w-100"></div>
+                  <div id="remote-container-outgoing"></div>
+                </div>
               </div>
-              <div class="modal-body">
 
-                <div style="max-height: 90vh;" class="d-flex flex-column align-content-center justify-content-center">
+              <div class="w-100" id="outgoingCallContainer">
 
-                  <!-- <div id="conference">
-                    <div id="local-container" class="w-100"></div>
-                    <div id="remote-container"></div>
-                  </div> -->
-                  <div class="w-100" id="directVideoCallContainer" style="display: none!important">
-                    <div id="conference">
-                      <div id="local-container-outgoing" class="w-100"></div>
-                      <div id="remote-container-outgoing"></div>
-                    </div>
-                  </div>
+                <div class="d-flex justify-content-center">
+                  {{$callStatulLabel}}
+                </div>
 
-                  <div class="w-100" id="outgoingCallContainer">
+                <div class="d-flex justify-content-center">
+                  <img [src]="$friendImage" style="width: 300px; height: 300px; border-radius: 50px;"/>
+                </div>
 
-                    <div class="d-flex justify-content-center">
-                      {{$callStatulLabel}}
-                    </div>
-  
-                    <div class="d-flex justify-content-center">
-                      <img [src]="$friendImage" style="width: 150px; height: 150px; border-radius: 50px;"/>
-                    </div>
-  
-                    <div class="d-flex justify-content-center">
-                      {{$friendSurname}} {{$friendName}}
-                    </div>
-
-                  </div>
-
+                <div class="d-flex justify-content-center">
+                  {{$friendSurname}} {{$friendName}}
                 </div>
 
               </div>
-              <div class="modal-footer">
-                <button type="button" class="btn btn-danger" data-bs-dismiss="modal" (click)="hangUpTheCall()">
-                  <i class="bi bi-telephone-x-fill"></i>
-                </button>
-              </div>
+
             </div>
+
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-danger" data-bs-dismiss="modal" (click)="hangUpTheCall()">
+              <i class="bi bi-telephone-x-fill"></i>
+            </button>
           </div>
         </div>
+      </div>
+    </div>
     
 
-    <div *ngIf="!$_CONVERSATION_DETAILS" style="display: flex; justify-content: center; align-items: center; width: 100%; height: 400px; background-color: white; border-radius: 5px; box-shadow: rgb(0 0 0 / 24%) 0px 3px 8px;">
+    <div *ngIf="!$_CONVERSATION_DETAILS" style="display: flex; justify-content: center; align-items: center; height: 400px; background-color: white; border-radius: 5px; box-shadow: rgb(0 0 0 / 24%) 0px 3px 8px;" class="col-12">
       <div style="text-align: center">
         No started conversation<br>Choose a friend to start a new conversation 
       </div>
     </div>
-
-    <!-- assets/img/boba.png -->
-    <div *ngIf="$_CONVERSATION_DETAILS" style="display: flex; flex-direction: column; width: 100%; height: 400px; background-color: white; border-radius: 5px; box-shadow: rgb(0 0 0 / 24%) 0px 3px 8px;">
-      <div style="display: flex; align-items: center; justify-content: space-between; width: 100%; min-height: 55px; background-color: #98c1d9; border-radius: 5px 5px 0px 0px; z-index: 1; box-shadow: 0px 15px 10px -15px #111;">
+<!--  style="height: 400px; background-color: white; border-radius: 5px; box-shadow: rgb(0 0 0 / 24%) 0px 3px 8px; position: relative;" -->
+    <div *ngIf="$_CONVERSATION_DETAILS"  class="d-flex flex-column col-12" style="height: 400px;">
+      <div style="display: flex; align-items: center; justify-content: space-between; min-height: 55px; background-color: #98c1d9; border-radius: 5px 5px 0px 0px; z-index: 1; box-shadow: 0px 15px 10px -15px #111;" class="col-12">
         
         <div style="display: flex; align-items: center">
           <img [src]="baseUrl + '/api/' + $_CONVERSATION_DETAILS.Avatar_Path" style="width: 45px; height: 45px; margin-left: 5px; border-radius: 50px;"/>
           <div style="margin-left: 10px">{{$_CONVERSATION_DETAILS.Surname}} {{$_CONVERSATION_DETAILS.Name}}</div>
         </div>
 
-
-
-
         <div class="d-flex">
-          <!-- (click)="getOrcreateConversation()" -->
           <button type="button" class="btn btn-success me-2" data-bs-toggle="modal" data-bs-target="#staticBackdrop" (click)="makeACall($_CONVERSATION_DETAILS)">
             <i class="bi bi-telephone-fill"></i>
           </button>
@@ -146,9 +113,7 @@
         </div>
 
       </div>
-      <!--  [ngStyle]="$_MESSAGE_LIST.length == 0 ? " -->
-      <!-- display: flex; justify-content: center; align-items: center; height: 300px -->
-      <div id="noMessagesContainer" style="display: none; justify-content: center; align-items: center; height: 300px">
+      <div id="noMessagesContainer" style="display: none; justify-content: center; align-items: center; height: 400px; background-color: white;">
 
         <div *ngIf="$spinner == true" class="spinner-grow" role="status">
           <span class="visually-hidden">Loading...</span>
@@ -162,20 +127,15 @@
       <div id="m_div" style=" display: flex; 
                               flex-direction: column; 
                               justify-content: end; 
-                              align-items: flex-end; 
-                              min-height: 176px;
-                              max-height: 300px;
+                              align-items: flex-end;
+                              background-color: white;
                               "
                               *ngIf="$messages.length > 0 && $spinner == false"
-                              >
-        <!-- <div *ngIf="$messages.length == 0">
-          No messages
-        </div> -->
+                              class="mb-5">
+
         <div id="scrollDiv" style="width: 100%; 
                     display: flex; 
                     flex-direction: column; 
-                    /* overflow-y: auto;  */
-                    /* scroll-behavior: smooth; */
                     overflow: scroll;"
                     class="conv_container_div"
                     #scrollMe [scrollTop]="scrollMe.scrollHeight"
@@ -218,57 +178,48 @@
         </div>
       </div>
 
-      <div id="textInputDiv" style="width: 40%; display: flex; justify-content: space-between; background-color: #e4ecfc; border-radius: 0px 0px 5px 5px; margin-bottom: 50px; position: fixed; bottom: 0">
-        <div style="width: 100%; display: flex; justify-content: center;">
-          <div id="textAreaDiv" class="root" role="textbox" contenteditable="true" spellcheck="true" (keydown)="sendMessage($event)" style="display: flex; 
-            flex-direction: column;
-            justify-content: center; 
-            align-items: center;
-            padding: 10px 0px; 
-            user-select: text; 
-            white-space: pre-wrap; 
-            word-break: break-word; 
-            max-height: 124px; 
-            position: relative; 
-            min-width: 0;
-            max-width: 90%;
-            overflow-y: auto; 
-            min-height: 20px; 
-            flex-grow: 1; 
-            outline: none; 
-            overflow: hidden;"
-            #div_root
-            data-lexical-editor="true">
-          <p #char_paragraph id="block-1" style="margin-bottom: 0px; margin-top: 0; width: 100%;">
-          <span id="spanMessage" data-lexical-text="true">
-          {{$_MESSAGE}}
-          </span>
-          <br>
-          </p>
+      <div class="col-12 m-0 p-0">
+        <div id="textInputDiv" style="width: 100%; display: flex; justify-content: space-between; background-color: #e4ecfc; border-radius: 0px 0px 5px 5px; position: absolute; bottom: 0">
+          <div style="width: 90%; display: flex; justify-content: center;">
+            <div id="textAreaDiv" class="root" role="textbox" contenteditable="true" spellcheck="true" (keydown)="sendMessage($event)" style="display: flex; 
+              flex-direction: column;
+              justify-content: center; 
+              align-items: center;
+              padding: 10px 0px; 
+              user-select: text; 
+              white-space: pre-wrap; 
+              word-break: break-word; 
+              max-height: 124px; 
+              position: relative; 
+              min-width: 0;
+              max-width: 90%;
+              overflow-y: auto; 
+              min-height: 20px; 
+              flex-grow: 1; 
+              outline: none; 
+              overflow: hidden;"
+              #div_root
+              data-lexical-editor="true">
+            <p #char_paragraph id="block-1" style="margin-bottom: 0px; margin-top: 0; width: 100%;">
+            <span id="spanMessage" data-lexical-text="true">
+            {{$_MESSAGE}}
+            </span>
+            <br>
+            </p>
+            </div>
           </div>
+          
+          <div style="width: 10%; display: flex; align-items: center;" (click)="sendMessage($event)">
+            <mat-icon class="sendIcon">send</mat-icon>
+          </div> 
         </div>
-        
-        <div style="display: flex; align-items: center; margin-right: 20px;" (click)="sendMessage($event)">
-          <mat-icon class="sendIcon">send</mat-icon>
-        </div> 
       </div>
+      
 
       
     </div>
 
 </div>
-<script>
-  const inputField = document.querySelector("#inputField");
-  let lines = [];
-
-  inputField.addEventListener("input", (e) => {
-      alert(1)
-      lines = inputField.value.split(/\r\n|\r|\n/);
-      if (lines.length < 6) {
-          inputField.setAttribute("rows", lines.length);
-      }
-  });
-</script>
 
 
 

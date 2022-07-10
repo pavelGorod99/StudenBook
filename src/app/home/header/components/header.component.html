@@ -129,12 +129,11 @@
 <!-- navbar-dark bg-dark -->
 <!--  style="background-color: white" -->
 <!--  navbar-dark bg-dark -->
-<nav class="navbar navbar-expand-md navbar-light bg-lignt nav-header sidebarNavigation ms-0 me-0 padding-left fix-header-on-top" data-sidebarClass="navbar-light bg-light">
+<nav id="mobileDesktopNavbar" class="navbar navbar-expand-md navbar-light bg-lignt nav-header sidebarNavigation ms-0 me-0 padding-left fix-header-on-top" data-sidebarClass="navbar-light bg-light">
     
     <div class="container-fluid d-flex justify-content-center cancel-margins align-left">
         <div class="row w-100">
             <div class="col-3 d-flex justify-end pe-0 cancel-margins margin-left-logo">
-                <!-- background-color: #212121; -->
                 <button id="burgerBtn" class="navbar-toggler leftNavbarToggler" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault" style="color: rgba(255, 255, 255, 0.5); border-color: rgba(255, 255, 255, 0.1); background-color: silver!important;"
                     aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
@@ -214,8 +213,8 @@
                             <li class="nav-item active h5">
                                 {{$_FULL_NAME_USER}}
                             </li>
-                            <li class="nav-item active">
-                                <a class="nav-link" (click)="showItem('news')">
+                            <li id="news" class="nav-item active">
+                                <a class="nav-link">
                                     <div id="news" class="display">
                                         <img src="assets/icons/news.png" width="22" height="17.6" class="opts">
                                         <span class="opts ms-2">News</span>
@@ -223,40 +222,40 @@
                                 </a>
                             </li>
                             <li id="conversations" class="nav-item active">
-                                <a class="nav-link" (click)="showItem('conversations')">
+                                <a class="nav-link">
                                     <div class="display">
                                         <img src="assets/icons/conversations.png" width="22" height="17.6" class="opts">
                                         <span class="opts ms-2">Conversations</span>
                                     </div>
                                 </a>
                             </li>
-                            <li class="nav-item active">
-                                <a class="nav-link" (click)="showItem('friends')">
-                                    <div id="friends" class="display">
+                            <li id="friends" class="nav-item active">
+                                <a class="nav-link">
+                                    <div class="display">
                                         <img src="assets/icons/friends.png" width="22" height="17.6" class="opts">
                                         <span class="opts ms-2">Friends</span>
                                     </div>
                                 </a>
                             </li>
-                            <li class="nav-item active">
-                                <a class="nav-link" (click)="showItem('groups')">
-                                    <div id="groups" class="display">
+                            <li id="groups" class="nav-item active">
+                                <a class="nav-link">
+                                    <div class="display">
                                         <img src="assets/icons/groups.png" width="22" height="17.6" class="opts">
                                         <span class="opts ms-2">Groups</span>
                                     </div>
                                 </a>
                             </li>
-                            <li class="nav-item active">
-                                <a class="nav-link" (click)="showItem('photos')">
-                                    <div id="photos" class="display">
+                            <li id="photos" class="nav-item active">
+                                <a class="nav-link">
+                                    <div class="display">
                                         <img src="assets/icons/photos.png" width="22" height="17.6" class="opts">
                                         <span class="opts ms-2">Photos</span>
                                     </div>
                                 </a>
                             </li>
-                            <li class="nav-item active">
-                                <a class="nav-link" (click)="showItem('settings')">
-                                    <div id="settings" class="display">
+                            <li id="settings" class="nav-item active">
+                                <a class="nav-link">
+                                    <div class="display">
                                         <img src="assets/icons/settings.png" width="22" height="17.6" class="opts">
                                         <span class="opts ms-2">Settings</span>
                                     </div>
@@ -271,18 +270,9 @@
                                 <div class="d-flex flex-column justify-content-center me-2">
                                     <img src="assets/img/down_arrow_login.png" height="15" width="20">
                                 </div>
-                                <!-- <div id="log_in_out_button" class="display">
-                                    <div class="log_in_out_ch">{{$_FULL_NAME_USER}}</div>
-                                    <div class="log_in_out_ch">
-                                        <img src="assets/img/user_icon.png">
-                                    </div>
-                                    <div class="log_in_out_ch">
-                                        <img src="assets/img/down_arrow_login.png">
-                                    </div>
-                                </div> -->
                             </li>
                         </div>
-                        <li class="nav-item active">
+                        <li id="signout" class="nav-item active">
                             <a class="nav-link">
                                 <div id="news" class="display">
                                     <button type="button" class="btn btn-secondary">Sign out</button>

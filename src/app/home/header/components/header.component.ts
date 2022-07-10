@@ -151,7 +151,6 @@ export class HeaderComponent implements OnInit, AfterViewInit {
   }
 
   showItem(OPTION: string) {
-    alert(OPTION)
     let i = document.getElementById('search_bar')! as (HTMLInputElement)
     i.value = ''
     this.router.navigate(['/home/' + OPTION])
@@ -168,19 +167,53 @@ export class HeaderComponent implements OnInit, AfterViewInit {
       console.log("HEADER PROFILE PHOTO: " + this.$userProfileImage1);
       this.setFullNameUser()
 
+      var self = this
+
+      $('#news').on('click', function () {
+        self.showItem('news')
+        $(this).hasClass("dropdown")||$(".sideMenu, .overlay").toggleClass("open")
+      })
+
+      $('#conversations').on('click', function () {
+        self.showItem('conversations')
+        $(this).hasClass("dropdown")||$(".sideMenu, .overlay").toggleClass("open")
+      })
+
+      $('#friends').on('click', function () {
+        self.showItem('friends')
+        $(this).hasClass("dropdown")||$(".sideMenu, .overlay").toggleClass("open")
+      })
+
+      $('#groups').on('click', function () {
+        self.showItem('groups')
+        $(this).hasClass("dropdown")||$(".sideMenu, .overlay").toggleClass("open")
+      })
+
+      $('#photos').on('click', function () {
+        self.showItem('photos')
+        $(this).hasClass("dropdown")||$(".sideMenu, .overlay").toggleClass("open")
+      })
+
+      $('#settings').on('click', function () {
+        self.showItem('settings')
+        $(this).hasClass("dropdown")||$(".sideMenu, .overlay").toggleClass("open")
+      })
+
+      $('#signout').on('click', function () {
+        self.logOut()
+        $(this).hasClass("dropdown")||$(".sideMenu, .overlay").toggleClass("open")
+      })
+
       $(document).ready( function () {
-        $('#conversations').click(function(){
-          alert('clicked');
-        });
         $(".sidebarNavigation .navbar-collapse")
         .hide()
-        .clone()
+        .clone(true, true)
         .appendTo("body")
         .removeAttr("class")
         .addClass("sideMenu")
         .show(),
         $("body")
-        .append("<div class='overlay'></div>"),
+        .append("<div id='overlayDiv' class='overlay'></div>"),
         $(".sideMenu")
         .addClass(
           $(".sidebarNavigation").attr("data-sidebarClass")!),
@@ -190,11 +223,7 @@ export class HeaderComponent implements OnInit, AfterViewInit {
               $(this).removeClass("open"),
               $(".sideMenu").removeClass("open")
             })
-          }),
-          $("body").on("click",".sideMenu.open .nav-item", function () {
-            if ($('#conversations')) alert('exists'); else alert ('not exists')
-            $(this).hasClass("dropdown") || $(".sideMenu, .overlay").toggleClass("open")
-          }),
+          })
           $(window).resize( function () { 
             $(".navbar-toggler").is(":hidden") ? $(".sideMenu, .overlay").hide() : $(".sideMenu, .overlay").show()
           })

@@ -10,7 +10,7 @@
 }
 
 #stories_label {
-	margin: 7px 10px 7px 10px;
+	/* margin: 7px 10px 7px 10px; */
 }
 
 #add_story {
@@ -19,8 +19,8 @@
 	height: 145px;
 	background-color: #dadada;
 	border-radius: 5px;
-	padding: 7px;
-	margin: 10px;
+	/* padding: 7px; */
+	/* margin: 10px; */
 	justify-content: center;
 }
 

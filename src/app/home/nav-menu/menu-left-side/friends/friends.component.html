@@ -1,8 +1,8 @@
 <!-- <p>friends works!</p> -->
-<div id="friend_list_label">
+<div id="friend_list_label" class="col-12">
     Friend list
 </div>
-<div id="friends_list_container">
+<div id="friends_list_container" class="col-12">
     <div id="friend_cell" class="f_cell" style="display: flex; justify-content: space-between;" *ngFor="let friend of $_FRIEND_LIST">
         <div style="display: flex; align-items: center;">
             <div style="display: flex; align-items: center;">
@@ -20,7 +20,7 @@
         </div>
         <div style="display: flex; align-items: center;">
             <!-- <button id="{{'message_f_' + friend.elem_f_identif}}" (click)="openMessage()">Message</button> -->
-            <button id="{{'message_f_' + friend.elem_f_identif}}" (click)="openMessage()" type="button" class="btn btn-primary">Message</button>
+            <button id="{{'message_f_' + friend.elem_f_identif}}" (click)="openMessage(friend.ID)" type="button" class="btn btn-primary">Message</button>
             <div style="margin-left: 10px; margin-right: 7px;">
                 <i class="fa fa-ellipsis-v vertical-dots" aria-hidden="true" id="{{'options_f_' + friend.elem_f_identif}}" (click)="openOptions(friend.elem_f_identif)"></i>
                 <div class="dots-options" id="{{'options-container-' + friend.elem_f_identif}}">

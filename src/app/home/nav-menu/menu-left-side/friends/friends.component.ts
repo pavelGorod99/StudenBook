@@ -24,7 +24,10 @@ export class FriendsComponent implements OnInit {
 
   $_FRIEND_LIST = new Array()
 
-  constructor(private sectionContainerService: SectionContainerServiceService, private router: Router, private browserNavigationService: BrowserNavigationService, private homeService: HomeService) {
+  constructor(private sectionContainerService: SectionContainerServiceService, 
+              private router: Router, 
+              private browserNavigationService: BrowserNavigationService, 
+              private homeService: HomeService) {
 
     browserNavigationService.load(router)
 
@@ -80,12 +83,17 @@ export class FriendsComponent implements OnInit {
     }
   }
 
-  openMessage() {
-
+  openMessage($userId: number) {
+    this.router.navigate(['/home/conversations'], { queryParams: { ID: $userId } });
+    this.sectionContainerService.displayItem('conversations')
+    sessionStorage.setItem('CURRENT_PATH', 'conversations')
   }
 
+  displaySectionContainer: boolean = true
   ngOnInit(): void {
-
+    this.sectionContainerService.current_section_container.subscribe(sectionContainer => {
+      this.displaySectionContainer = sectionContainer
+    })
   }
 
 }

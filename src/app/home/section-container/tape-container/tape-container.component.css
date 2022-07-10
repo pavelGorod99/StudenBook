@@ -1,10 +1,10 @@
 #tape_container {
 
 	margin-top: 25px;
-	width: 90%;
+	/* width: 90%; */
 	background-color: white;
 	border-radius: 5px;
-	padding: 7px;
+	/* padding: 7px; */
 	justify-content: center;
 	flex-direction: column;
 }

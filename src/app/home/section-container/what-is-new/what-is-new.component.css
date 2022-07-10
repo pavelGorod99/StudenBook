@@ -20,3 +20,30 @@
 
 	margin-right: 5px;
 }
+
+#whatIsNew {
+	background-image: url('../../../../assets/img/Studentbook_avatar.png');
+	padding-left: 50px;
+	background-size: 30px;
+	background-repeat: no-repeat;
+	background-position: 2% 50%;
+	border-radius: 8px;
+}
+
+@media (max-width: 500px) {
+
+	#whatIsNew {
+		height: 45px!important
+	}
+}
+
+@media (min-width: 501px) {
+	#whatIsNewDiv {
+		margin-left: 0!important;
+		margin-right: 0!important;
+	}
+
+	#whatIsNew {
+		height: 45px!important
+	}
+}

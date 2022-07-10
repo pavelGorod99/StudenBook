@@ -1,44 +1,62 @@
-#section {
-    flex-direction: column;
-    justify-content: space-between;
+
+@media (min-width: 501px) {
+	#section {
+		flex-direction: column;
+		justify-content: space-between;
+	}
+	
+	#section_container {
+	
+		justify-content: center;
+		flex-direction: column;
+		align-items: center;
+	}
+	
+	::ng-deep app-what-is-new {
+		display: flex;
+		margin-top: 25px;
+		/* margin-left: 5%; */
+		width: 100%;
+		/* background-color: white; */
+		border-radius: 5px;
+		/* padding: 7px; */
+		justify-content: space-between;
+		align-items: center;
+	}
+	
+	::ng-deep app-story-container {
+		margin-top: 25px;
+		width: 90%;
+		/* background-color: white; */
+		border-radius: 5px;
+		padding-top: 7px;
+		padding-bottom: 7px;
+		/* justify-content: space-between;
+		flex-direction: column; */
+	}
+	
+	::ng-deep app-tape-container {
+		/* margin-top: 25px;
+		width: 90%;
+		background-color: white;
+		border-radius: 5px;
+		padding: 7px;
+		justify-content: center;
+		flex-direction: column; */
+	}
 }
 
-#section_container {
+@media (max-width: 500px) {
+	#section_container {
+		margin-top: 2rem!important
+	}
 
-	justify-content: center;
-	flex-direction: column;
-	align-items: center;
-}
+	::ng-deep app-what-is-new {
+		padding-top: 5px!important;
+		padding-bottom: 5px!important
+	}
 
-::ng-deep app-what-is-new {
-    display: flex;
-    margin-top: 25px;
-    /* margin-left: 5%; */
-	width: 90%;
-	background-color: white;
-	border-radius: 5px;
-	padding: 7px;
-	justify-content: space-between;
-	align-items: center;
-}
-
-::ng-deep app-story-container {
-    margin-top: 25px;
-	width: 90%;
-	/* background-color: white; */
-	border-radius: 5px;
-	padding-top: 7px;
-    padding-bottom: 7px;
-	/* justify-content: space-between;
-	flex-direction: column; */
-}
-
-::ng-deep app-tape-container {
-    /* margin-top: 25px;
-	width: 90%;
-	background-color: white;
-	border-radius: 5px;
-	padding: 7px;
-	justify-content: center;
-	flex-direction: column; */
+	::ng-deep app-story-container {
+		
+	}
 }

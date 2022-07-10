@@ -159,7 +159,10 @@ export class CallService {
 
           // alert(response)
 
+            document.getElementById('mobileDesktopNavbar')!.style.display = 'block'
 
+            document.getElementById('shadowDiv')!.style.display = 'none'
+            
             this.closeVideoStramAndModal($callingModal, $video1, $video2, $videoCallContainer, $callContainer, $side)
 
             // if(this.$checkIdFriendEndedCallInterval) {

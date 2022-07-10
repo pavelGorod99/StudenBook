@@ -1,7 +1,7 @@
 import { CdkTextareaAutosize } from '@angular/cdk/text-field';
 import { AfterViewInit, ChangeDetectorRef, Component, ElementRef, NgZone, OnInit, ViewChild } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { DragScrollComponent } from 'custom_module/ngx-drag-scroll/src/public-api';
 import { debounceTime, map, take } from 'rxjs/operators';
 import { BrowserNavigationService } from 'src/app/home/service/home.browser.navigation.service';
@@ -51,9 +51,9 @@ export class ConversationsComponent implements OnInit, AfterViewInit {
     name: this.fb.control('', [Validators.required])
   });
 
-  get conversationNameFc(): FormControl {
-    return this.conversationFormGroup.get('name') as FormControl;
-  }
+  // get conversationNameFc(): FormControl {
+  //   return this.conversationFormGroup.get('name') as FormControl;
+  // }
 
 
   @ViewChild('chat_div') chat_div_element!: ElementRef;
@@ -158,11 +158,10 @@ export class ConversationsComponent implements OnInit, AfterViewInit {
     private cdref: ChangeDetectorRef,
     private timeService: TimeService,
     private fb: FormBuilder,
-    private callService: CallService) {
+    private callService: CallService,
+    private route: ActivatedRoute) {
       
     browserNavigationService.load(router)
-
-    
   }
 
   $friendName = ''
@@ -186,24 +185,23 @@ export class ConversationsComponent implements OnInit, AfterViewInit {
     
     this.callService.$hideAllModalsAux = true
 
-    this.$friendName = friend.Name //+
-    this.$friendSurname = friend.Surname //+
-    this.$friendImage = this.baseUrl + '/api/' + friend.Avatar_Path //+
-    this.$friendID = Number(friend.ID) //+
+    this.$friendName = friend.Name
+    this.$friendSurname = friend.Surname
+    this.$friendImage = this.baseUrl + '/api/' + friend.Avatar_Path
+    this.$friendID = Number(friend.ID)
 
-    this.callService.setDivsForOutgoingCalls('none', 'block') //+
+    this.callService.setDivsForOutgoingCalls('none', 'block')
 
-    this.$callStatulLabel = 'Calling ...' //+
+    this.$callStatulLabel = 'Calling ...'
 
-    const uid = new ShortUniqueId({ length: 10 }); //+
+    const uid = new ShortUniqueId({ length: 10 });
 
-    this.$currentToken = uid(); //+
+    this.$currentToken = uid();
 
     this.conversationService.sendCallRequest(this.$userId, Number(friend.ID), this.$currentToken) //+
       .subscribe((response) => {
 
         console.log(response);
-        
 
         if (response == true) {
   
@@ -214,6 +212,15 @@ export class ConversationsComponent implements OnInit, AfterViewInit {
           this.$audio.load();
           this.$audio.play();
           this.$callingModalElement.style.display = 'block'
+          this.modalBack()
+
+          // let sidebarDivOverlay = document.getElementById('overlayDiv')!
+          // sidebarDivOverlay.style.display = 'none'
+
+          // let navbarsExampleDefault = document.getElementById('navbarsExampleDefault')!
+          // navbarsExampleDefault.style.display = 'none'
+
+          // $(".sideMenu, .overlay").hide()
 
           this.endCallIfDidntAnswer(Number(friend.ID), this.$currentToken)
           
@@ -222,6 +229,7 @@ export class ConversationsComponent implements OnInit, AfterViewInit {
             this.callService.$checkIfFriendAnsweredInterval = setInterval(() => {
 
               if (this.callService.$turnOnCallerVideo) { //+
+                // alert(1)
                 this.checkIfFriendAnswered(this.$userId, Number(friend.ID), this.$currentToken)
                 this.checkIfFriendHungUpCall(this.$userId, Number(friend.ID), this.$currentToken)
               }
@@ -237,6 +245,11 @@ export class ConversationsComponent implements OnInit, AfterViewInit {
     this.conversationService.checkIfFriendStatus($userId, $friendId, $token, 'ENDCALL')
       .subscribe((response) => {
         if (response == true) {
+
+          document.getElementById('mobileDesktopNavbar')!.style.display = 'block'
+
+          document.getElementById('shadowDiv')!.style.display = 'none'
+
           this.$audio.pause();
           this.$audio.currentTime = 0;
           this.$callingModal.hide();
@@ -356,6 +369,10 @@ export class ConversationsComponent implements OnInit, AfterViewInit {
   endAudioAndCloseModal() {
     this.$audio.pause();
     this.$audio.currentTime = 0;
+
+    document.getElementById('mobileDesktopNavbar')!.style.display = 'block'
+
+    document.getElementById('shadowDiv')!.style.display = 'none'
     
     this.callService.closeVideoStramAndModal(
       
@@ -375,23 +392,35 @@ export class ConversationsComponent implements OnInit, AfterViewInit {
   $callingModal: any
 
   ngAfterViewInit() { 
-
     this.$callingModalElement = document.getElementById('staticBackdrop')
     if (this.$callingModalElement) {
       this.$callingModal = new bootstrap.Modal(this.$callingModalElement)
     }
   }
 
+  modalBack() {
+    document.getElementById('mobileDesktopNavbar')!.style.display = 'none'
+
+    var modalsForDelete = document.querySelectorAll('.modal-backdrop')
+  
+    modalsForDelete.forEach(box => {
+      box.remove();
+    });
+
+    document.getElementById('shadowDiv')!.style.display = 'block'
+  }
+
+  subscribe: any
+
   ngOnInit(): void {
 
-    this.conversationService.searchConversation(['Mustafa', 'Hasanovic'])
-      .subscribe(result => {
-        console.log(result);
-      })
+    if (this.route.snapshot.queryParamMap.get("ID")) {
+      this.clickItem(this.route.snapshot.queryParamMap.get("ID"))
+    } else {
+      this.getLastConversation()
+    }
 
     this.getPeopleConversationData()
-
-    this.getLastConversation()
 
     this.getUserLogInTime()
 
@@ -412,7 +441,6 @@ export class ConversationsComponent implements OnInit, AfterViewInit {
   getUserLogInTime() {
     this.conversationService.getLogInTime(Number(sessionStorage.getItem('USER_ID')))
       .subscribe((result:any) => {
-        // console.log("LOGIN TIME: " + JSON.stringify(result));
         this.$_USER_LOGIN_TIME = new Date(result['user_log_in_time'])
         console.log(this.$_USER_LOGIN_TIME);
         
@@ -782,7 +810,6 @@ export class ConversationsComponent implements OnInit, AfterViewInit {
     this.conversationService.getLastOneConversationFriend(Number(sessionStorage.getItem('USER_ID')))
       .subscribe((response: any) => {
         console.log(response);
-        
         if (response != null) {
           this.$_CONVERSATION_DETAILS = response
           this.getConversation(response['ID'])

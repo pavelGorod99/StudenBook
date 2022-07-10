@@ -5,7 +5,7 @@
 export const environment = {
   production: false,
   // apiHost: 'http://localhost/StudenBook'
-  apiHost: 'https://192.168.0.101/StudenBook'
+  apiHost: 'https://192.168.79.59/StudenBook'
 };
 
 /*
